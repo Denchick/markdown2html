@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using FluentAssertions;
 using Markdown.MarkupRules;
+using Markdown.Parsers;
+using Markdown.TagsParsers;
 using NUnit.Framework;
 
 namespace Markdown
@@ -96,6 +99,36 @@ namespace Markdown
             var headerTag = new ParsedSubline(0, line.Length, new Header1());
             var boldTag = new ParsedSubline(1, 3, new Cursive());
             var expected = new List<ParsedSubline>() { headerTag, boldTag };
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        private readonly Regex getMarkdowFromText = new Regex("!\\[.*\\]\\(.*\\)");
+        private List<IMarkupRule> imgTag = new List<IMarkupRule>() { new ImageTag() };
+
+        [TestCase("![авыаыв	](http://p/1.jpg)", "http://p/1.jpg", "авыаыв	", 0)]
+        [TestCase("![](123longNameWhyNotIthinks.png)", "123longNameWhyNotIthinks.png", "", 0)]
+        [TestCase("![3123321]()", "", "3123321", 0)]
+        [TestCase("!![авыаывsdfsdfdsfsdf](http://p/1.jpg)", "http://p/1.jpg", "авыаывsdfsdfdsfsdf", 1)]
+        [TestCase("asasas ![авыаыв	](http://p/1.jpg)", "http://p/1.jpg", "авыаыв	", 7)]
+        public void CorrectParsingImageInSimpleLine(string text, string link, string alt, int leftBound)
+        {
+            var parser = new TextParser(imgTag, new List<IMarkupTagsParser>() { new ImageTagParser(imgTag) });
+            var result = parser.ParseLine(text);
+            var html = $"img src=\"{link}\" alt=\"{alt}\"";
+            var imageTag = new ImageTag() {HtmlTag = html, MarkupTag = getMarkdowFromText.Match(text).Value};
+            var expected = new List<ParsedSubline>(){new ParsedSubline(leftBound, imageTag)};
+
+            result.Should().BeEquivalentTo(expected);
+        }
+        
+        [TestCase(" ![]http://p/1.jpg)")]
+        [TestCase("[авыаыв	]!(http://p/1.jpg)")]
+        [TestCase("![dasbdjlsabjfbsbfbashbasbhfbsabfbshafhjsbfhbsahjfbhjsabfjaflbhal]")]
+        public void ParsingIncorrectImageTag(string text)
+        {
+            var parser = new TextParser(imgTag, new List<IMarkupTagsParser>(){new ImageTagParser(imgTag) } );
+            var result = parser.ParseLine(text);
+            var expected = new List<ParsedSubline>() { };
             result.Should().BeEquivalentTo(expected);
         }
     }

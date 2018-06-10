@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Markdown.MarkupRules;
+using Markdown.Parsers;
 using Markdown.TagsParsers;
 
 namespace Markdown
@@ -29,7 +30,7 @@ namespace Markdown
             {
                 new Bold(), new Cursive(),
                 new Header6(), new Header5(), new Header4(), new Header3(), new Header2(), new Header1(),
-                new Paragraph(), new Code()
+                new Paragraph(), new Code(), new ImageTag()
             };
         }
 
@@ -42,6 +43,7 @@ namespace Markdown
                 new PairedMarkupTagParser(rules),
                 new ParagraphTagsParser(rules),
                 new SingleMarkupTagsParser(rules),
+                new ImageTagParser(rules)
             };
         }
 
