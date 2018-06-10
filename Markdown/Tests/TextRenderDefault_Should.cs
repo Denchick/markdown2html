@@ -2,6 +2,8 @@
 using System.Linq;
 using FluentAssertions;
 using Markdown.MarkupRules;
+using Markdown.Parsers;
+using Markdown.TagsParsers;
 using NUnit.Framework;
 
 namespace Markdown
@@ -133,6 +135,19 @@ namespace Markdown
             var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
 
             render.RenderToHtml(s).Contains($"<hr>");
+        }
+
+        [TestCase("![авыаыв	](http://p/1.jpg)", "http://p/1.jpg", "авыаыв	")]
+        [TestCase("![](http://p/1.jpg)", "http://p/1.jpg", "")]
+        [TestCase("![1233456]()", "", "1233456")]
+        [TestCase("hello my dear friend! ![file not found](http://p/1.jpg)", "http://p/1.jpg", "file not found", "hello my dear friend! ")]
+        public void CorrectRenderImage(string text, string link, string alt, string otherText = "")
+        {
+            var imgTag = new IMarkupRule[] {new ImageTag(),};
+            var render = new DefaultTextRender(imgTag, new IMarkupTagsParser[] {new ImageTagParser(imgTag)});
+            var html = $"{otherText}<img src=\"{link}\" alt=\"{alt}\">\n";
+            var result = render.RenderToHtml(text);
+            result.Should().BeEquivalentTo(html);
         }
     }
     
