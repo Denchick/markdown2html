@@ -21,14 +21,16 @@ namespace Markdown.Parsers
         {
             foreach (var currentMarkupRule in CurrentMarkupRules)
             {
-                if (line.StartsWith(currentMarkupRule.MarkupTag))
-                {
+                if (!line.StartsWith(currentMarkupRule.MarkupTag)) continue;
+                if (line.EndsWith(currentMarkupRule.MarkupTag))
                     return new List<ParsedSubline>()
                     {
-                        new ParsedSubline(0, line.Length, currentMarkupRule)
+                        new ParsedSubline(0, line.Length - currentMarkupRule.MarkupTag.Length, currentMarkupRule)
                     };
-
-                }
+                return new List<ParsedSubline>()
+                {
+                    new ParsedSubline(0, line.Length, currentMarkupRule)
+                };
             }
             return new List<ParsedSubline>();
         }

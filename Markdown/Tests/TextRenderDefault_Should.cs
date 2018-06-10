@@ -109,6 +109,15 @@ namespace Markdown
 
             render.RenderToHtml(input).Contains(expected);
         }
+
+        [Test]
+        public void CorrectMarkup_WhenHeaderTagHaveClosingMarkupTag()
+        {
+            var input = @"# Заголовок #";
+            var render = new DefaultTextRender(Utils.GetAllAvailableRules());
+
+            render.RenderToHtml(input).Contains("<h1>Заголовок</h1>");
+        }
     }
     
 }
