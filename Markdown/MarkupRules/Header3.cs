@@ -7,6 +7,7 @@ namespace Markdown.MarkupRules
         public string MarkupTag { get; } = "###";
         public string HtmlTag { get; } = "h3";
         public bool HaveClosingMarkupTag { get; } = false;
-        public bool HaveClosingHtmlTag { get; } = true;        
+        public bool HaveClosingHtmlTag { get; } = true;
+        public bool HasAttribute { get; } = false;
     }
 }

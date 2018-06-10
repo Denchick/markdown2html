@@ -82,6 +82,7 @@ namespace Markdown
                 var lenght = subline.MarkupRule.MarkupTag.Length;
                 insertedTags.Add(
                     (subline.LeftBorderOfSubline, new FromMarkupTagToHtml(htmlTag, false, lenght)));
+                if (subline.MarkupRule.HaveClosingHtmlTag)
                 insertedTags.Add(
                     (subline.RightBorderOfSubline, new FromMarkupTagToHtml(htmlTag, true, lenght)));
             }

@@ -6,5 +6,6 @@
         public string HtmlTag { get; } = "p";
         public bool HaveClosingMarkupTag { get; } = false;
         public bool HaveClosingHtmlTag { get; } = true;
+        public bool HasAttribute { get; } = false;
     }
 }

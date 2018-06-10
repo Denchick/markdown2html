@@ -8,5 +8,6 @@ namespace Markdown.MarkupRules
         public string HtmlTag { get; } = "em";
         public bool HaveClosingMarkupTag { get; } = true;
         public bool HaveClosingHtmlTag { get; } = true;
+        public bool HasAttribute { get; } = false;
     }
 }

@@ -17,7 +17,7 @@ namespace Markdown.Parsers
         public ImageTagParser(IEnumerable<IMarkupRule> currentMarkupRules)
         {
             CurrentMarkupRules = currentMarkupRules
-                .Where(e => !e.HaveClosingMarkupTag)
+                .Where(e => !e.HaveClosingMarkupTag && e.HasAttribute)
                 .OrderByDescending(e => e.MarkupTag.Length)
                 .ToList();
         }

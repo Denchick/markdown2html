@@ -12,7 +12,7 @@ namespace Markdown.TagsParsers
         public SingleMarkupTagsParser(IEnumerable<IMarkupRule> currentMarkupRules)
         {
             CurrentMarkupRules = currentMarkupRules
-                .Where(e => !e.HaveClosingMarkupTag && !(e is Paragraph))
+                .Where(e => !e.HaveClosingMarkupTag && !(e is Paragraph) && !e.HasAttribute)
                 .OrderByDescending(e => e.MarkupTag.Length)
                 .ToList();
         }

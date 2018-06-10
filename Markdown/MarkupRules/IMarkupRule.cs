@@ -13,5 +13,6 @@ namespace Markdown
         string HtmlTag { get; }
         bool HaveClosingMarkupTag { get; }
         bool HaveClosingHtmlTag { get; }
+        bool HasAttribute { get; }
     }
 }

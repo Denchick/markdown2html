@@ -6,6 +6,7 @@
         public string HtmlTag { get; set; } = "img";
         public bool HaveClosingMarkupTag { get; } = false;
         public bool HaveClosingHtmlTag { get; } = false;
+        public bool HasAttribute { get; } = true;
 
         //public Image(string MarkdownTag, string link, string text)
         //{
