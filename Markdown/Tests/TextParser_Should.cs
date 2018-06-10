@@ -22,7 +22,7 @@ namespace Markdown
         {
             var rules = Utils.GetAllAvailableRules();
             
-            var parser = new TextParser(rules);
+            var parser = new TextParser(rules, Utils.GetAllAvailableParsers());
             var result = parser.ParseLine(line);
 
             var expected = new List<ParsedSubline>()
@@ -39,7 +39,7 @@ namespace Markdown
         [TestCase("_a\nb_", "_", 0, 4)]
         public void CorrectParsing_WhenOnePairedMarkupTagInLine(string line, string markupTag, int leftParsedIndex, int rightParsedIndex)
         {
-            var parser = new TextParser(Utils.GetAllAvailableRules());
+            var parser = new TextParser(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var result = parser.ParseLine(line);
 
             var expected = new List<ParsedSubline>()
@@ -59,7 +59,7 @@ namespace Markdown
         [TestCase("###### kek", "######", 0, 10)]
         public void CorrectParsing_WhenOneSingleMarkupTagInLine(string line, string markupTag, int leftParsedIndex, int rightParsedIndex)
         {
-            var parser = new TextParser(Utils.GetAllAvailableRules());
+            var parser = new TextParser(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var result = parser.ParseLine(line);
 
             var expected = new List<ParsedSubline>()
@@ -75,7 +75,7 @@ namespace Markdown
         {
             var line = "_a_ __b__";
             
-            var parser = new TextParser(Utils.GetAllAvailableRules());
+            var parser = new TextParser(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var result = parser.ParseLine(line);
 
             var cursiveTag = new ParsedSubline(0, 2, new Cursive());
@@ -90,7 +90,7 @@ namespace Markdown
         {
             var line = "#_a_";
             
-            var parser = new TextParser(Utils.GetAllAvailableRules());
+            var parser = new TextParser(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var result = parser.ParseLine(line);
 
             var headerTag = new ParsedSubline(0, line.Length, new Header1());

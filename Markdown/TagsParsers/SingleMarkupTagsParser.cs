@@ -3,7 +3,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Markdown.MarkupRules;
 
-namespace Markdown.Parsers
+namespace Markdown.TagsParsers
 {
     public class SingleMarkupTagsParser : IMarkupTagsParser
     {

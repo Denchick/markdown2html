@@ -16,7 +16,7 @@ namespace Markdown
         public void CorrectRending_WhenNeedsRenderingOneTag(string line, string markupTag, 
             int leftBorderOfSubline, int rightBorderOfSubline, string expected)
         {   
-            var render = new DefaultTextRender(Utils.GetAllAvailableRules());
+            var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var parsed = new List<ParsedSubline>()
             {
                 new ParsedSubline(leftBorderOfSubline, rightBorderOfSubline, 
@@ -38,7 +38,7 @@ namespace Markdown
             var paragraphTag = new ParsedSubline(-1, line.Length, new Paragraph());
             var parsed = new List<ParsedSubline>() { cursiveTag, boldTag, paragraphTag };
             
-            var render = new DefaultTextRender(Utils.GetAllAvailableRules());
+            var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var result = render.RenderLine(line, parsed);
 
             result.Should().BeEquivalentTo("<p><em>a</em> <strong>b</strong></p>");
@@ -52,7 +52,7 @@ namespace Markdown
             var boldTag = new ParsedSubline(1, 3, new Cursive());
             var parsed = new List<ParsedSubline>() { headerTag, boldTag };
             
-            var render = new DefaultTextRender(Utils.GetAllAvailableRules());
+            var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var result = render.RenderLine(line, parsed);
 
             result.Should().BeEquivalentTo("<h1><em>a</em></h1>");        
@@ -62,7 +62,7 @@ namespace Markdown
         public void CorrectRendering_WhenRenderHeaderTag()
         {
             var line = "#kek";
-            var render = new DefaultTextRender(Utils.GetAllAvailableRules());
+            var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var parsed = new List<ParsedSubline>()
             {
                 new ParsedSubline(0, 4, Utils.GetAllAvailableRules().First(e => e.MarkupTag == "#"))
@@ -85,7 +85,7 @@ namespace Markdown
         [TestCase("kek#")]
         public void CorrectMarkup_WhenNothingToMarkup(string s)
         {
-            var render = new DefaultTextRender(Utils.GetAllAvailableRules());
+            var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
 
             render.RenderToHtml(s).Contains($"<p>{s}</p>");
         }
@@ -105,7 +105,7 @@ namespace Markdown
 <h4>Заголовок h4</h4>
 <h5>Заголовок h5</h5>
 <h6>Заголовок h6</h6>";
-            var render = new DefaultTextRender(Utils.GetAllAvailableRules());
+            var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
 
             render.RenderToHtml(input).Contains(expected);
         }
@@ -114,7 +114,7 @@ namespace Markdown
         public void CorrectMarkup_WhenHeaderTagHaveClosingMarkupTag()
         {
             var input = @"# Заголовок #";
-            var render = new DefaultTextRender(Utils.GetAllAvailableRules());
+            var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
 
             render.RenderToHtml(input).Contains("<h1>Заголовок</h1>");
         }

@@ -2,7 +2,8 @@
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using Markdown.Parsers;
+using Markdown.MarkupRules;
+using Markdown.TagsParsers;
 using NUnit.Framework;
 
 namespace Markdown
@@ -10,26 +11,23 @@ namespace Markdown
     public class TextParser
     {
         private List<IMarkupRule> CurrentMarkupRules { get; }
-        public TextParser(IEnumerable<IMarkupRule> rules)
+        private List<IMarkupTagsParser> CurrentTagsParsers { get; }
+
+        public TextParser(IEnumerable<IMarkupRule> rules, IEnumerable<IMarkupTagsParser> parsers)
         {
             CurrentMarkupRules = rules
                 .OrderByDescending(e => e.MarkupTag.Length)
                 .ToList();
+            CurrentTagsParsers = parsers.ToList();
         }
 
         public IEnumerable<ParsedSubline> ParseLine(string line)
         {
             var result = new List<ParsedSubline>();
             if (line is null) return result;
-
-            var currentLine = line;
-            var singleTagsParser = new SingleMarkupTagsParser(CurrentMarkupRules);
-            var pairTagsParser = new PairedMarkupTagParser(CurrentMarkupRules);
-            var paragraphsParser = new ParagraphTagsParser(CurrentMarkupRules);
             
-            result.AddRange(singleTagsParser.ParseLine(line));
-            result.AddRange(pairTagsParser.ParseLine(line));
-            result.AddRange(paragraphsParser.ParseLine(line));
+            foreach (var parser in CurrentTagsParsers)
+                result.AddRange(parser.ParseLine(line));
             
             return result;
         }

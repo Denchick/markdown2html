@@ -3,7 +3,7 @@ using System.Linq;
 using Markdown.MarkupRules;
 using NUnit.Framework.Internal;
 
-namespace Markdown.Parsers
+namespace Markdown.TagsParsers
 {
     public class ParagraphTagsParser : IMarkupTagsParser
     {

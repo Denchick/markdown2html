@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Markdown.Renders;
+using Markdown.TagsParsers;
 using static System.ValueTuple;
 
 namespace Markdown
@@ -10,20 +11,22 @@ namespace Markdown
     public class DefaultTextRender : ITextRender
     {
         private List<IMarkupRule> CurrentMarkupRules { get; }
+        private List<IMarkupTagsParser> CurrentTagsParsers { get; }
 
-        public DefaultTextRender(IEnumerable<IMarkupRule> rules)
+        public DefaultTextRender(IEnumerable<IMarkupRule> rules, IEnumerable<IMarkupTagsParser> parsers)
         {
             CurrentMarkupRules = rules
                 .Where(e => e?.MarkupTag != null)
                 .OrderBy(e => e.MarkupTag.Length)
                 .ToList();
+            CurrentTagsParsers = parsers.ToList();
         }
 
         public string RenderToHtml(string markdown)
         {
             var result = new StringBuilder();
-            var parser = new TextParser(CurrentMarkupRules);
-            var render = new DefaultTextRender(CurrentMarkupRules);
+            var parser = new TextParser(CurrentMarkupRules, CurrentTagsParsers);
+            var render = new DefaultTextRender(CurrentMarkupRules, CurrentTagsParsers);
             foreach (var line in markdown.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries))
             {
                 var parsed = parser.ParseLine(line);

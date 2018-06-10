@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Markdown.MarkupRules;
+using Markdown.TagsParsers;
 
 namespace Markdown
 {
@@ -21,6 +22,7 @@ namespace Markdown
                    char.IsWhiteSpace(Convert.ToChar(line[index - 1]));
         }
 
+        //костыль
         public static IEnumerable<IMarkupRule> GetAllAvailableRules()
         {
             return new List<IMarkupRule>()
@@ -28,6 +30,18 @@ namespace Markdown
                 new Bold(), new Cursive(),
                 new Header6(), new Header5(), new Header4(), new Header3(), new Header2(), new Header1(),
                 new Paragraph(), new Code()
+            };
+        }
+
+        //Костыль
+        public static IEnumerable<IMarkupTagsParser> GetAllAvailableParsers()
+        {
+            var rules = GetAllAvailableRules().ToList();
+            return new List<IMarkupTagsParser>()
+            {
+                new PairedMarkupTagParser(rules),
+                new ParagraphTagsParser(rules),
+                new SingleMarkupTagsParser(rules),
             };
         }
 

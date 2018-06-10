@@ -69,10 +69,10 @@
     <Compile Include="MarkupRules\Header6.cs" />
     <Compile Include="MarkupRules\IMarkupRule.cs" />
     <Compile Include="MarkupRules\Paragraph.cs" />
-    <Compile Include="Parsers\IMarkupTagsParser.cs" />
-    <Compile Include="Parsers\PairedMarkupTagParser.cs" />
-    <Compile Include="Parsers\ParagraphTagsParser.cs" />
-    <Compile Include="Parsers\SingleMarkupTagsParser.cs" />
+    <Compile Include="TagsParsers\IMarkupTagsParser.cs" />
+    <Compile Include="TagsParsers\PairedMarkupTagParser.cs" />
+    <Compile Include="TagsParsers\ParagraphTagsParser.cs" />
+    <Compile Include="TagsParsers\SingleMarkupTagsParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renders\ITextRender.cs" />

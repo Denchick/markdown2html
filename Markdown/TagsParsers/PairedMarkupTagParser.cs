@@ -2,7 +2,7 @@
 using System.Linq;
 using Markdown.MarkupRules;
 
-namespace Markdown.Parsers
+namespace Markdown.TagsParsers
 {
     public class PairedMarkupTagParser : IMarkupTagsParser
     {
