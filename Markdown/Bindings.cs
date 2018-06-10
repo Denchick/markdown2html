@@ -1,5 +1,6 @@
 ﻿using Markdown;
 using Markdown.MarkupRules;
+using Markdown.Parsers;
 using Markdown.TagsParsers;
 using Markdown.Renders;
 using Ninject.Modules;
@@ -21,9 +22,11 @@ public class Bindings : NinjectModule
         Bind<IMarkupRule>().To<Header2>();
         Bind<IMarkupRule>().To<Header1>();
         Bind<IMarkupRule>().To<Paragraph>();
+        Bind<IMarkupRule>().To<ImageTag>();
 
         Bind<IMarkupTagsParser>().To<PairedMarkupTagParser>();
         Bind<IMarkupTagsParser>().To<ParagraphTagsParser>();
         Bind<IMarkupTagsParser>().To<SingleMarkupTagsParser>();
+        Bind<IMarkupTagsParser>().To<ImageTagParser>();
     }
 }

@@ -67,8 +67,10 @@
     <Compile Include="MarkupRules\Header4.cs" />
     <Compile Include="MarkupRules\Header5.cs" />
     <Compile Include="MarkupRules\Header6.cs" />
+    <Compile Include="MarkupRules\Image.cs" />
     <Compile Include="MarkupRules\IMarkupRule.cs" />
     <Compile Include="MarkupRules\Paragraph.cs" />
+    <Compile Include="TagsParsers\ImageTagParser.cs" />
     <Compile Include="TagsParsers\IMarkupTagsParser.cs" />
     <Compile Include="TagsParsers\PairedMarkupTagParser.cs" />
     <Compile Include="TagsParsers\ParagraphTagsParser.cs" />
