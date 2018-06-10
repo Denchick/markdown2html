@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Markdown.MarkupRules;
+using Markdown.Renders;
+using Ninject;
 
 namespace Markdown
 {
@@ -14,15 +17,26 @@ namespace Markdown
 		private static void Main(string[] args)
 		{
 			var textFromFile = File.ReadAllText(@"..\..\Spec.md");
-			var markupRules = Utils.GetAllAvailableRules();
-			var md = new Md(markupRules);
-			var result = md.RenderToHtml(textFromFile);
-			
-			using (var sw = new StreamWriter(@"..\..\Spec.html"))
-			{
-				sw.WriteLine(result);
-			}
-			
-		}
-	}
+
+		    var kernel = new StandardKernel();
+		    kernel.Load(Assembly.GetExecutingAssembly());
+
+		    var render = kernel.Get<ITextRender>();
+		    var result = render.RenderToHtml(textFromFile);
+		    using (var sw = new StreamWriter(@"..\..\Spec.html"))
+            {
+                sw.WriteLine(result);
+            }
+
+
+            //manual dependency injection
+            //var render = new DefaultTextRender(markupRules);
+            //var result = render.RenderToHtml(textFromFile);
+            //using (var sw = new StreamWriter(@"..\..\Spec.html"))
+            //{
+            //	sw.WriteLine(result);
+            //}
+
+        }
+    }
 }

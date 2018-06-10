@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Markdown
 {
     [TestFixture]
-    public class TextRender_Should
+    public class TextRenderDefault_Should
     {
         [TestCase("_kek_", "_", 0, 4, "<p><em>kek</em></p>")]
         [TestCase("__kek__", "__", 0, 5, "<p><strong>kek</strong></p>")]
@@ -16,7 +16,7 @@ namespace Markdown
         public void CorrectRending_WhenNeedsRenderingOneTag(string line, string markupTag, 
             int leftBorderOfSubline, int rightBorderOfSubline, string expected)
         {   
-            var render = new TextRender(Utils.GetAllAvailableRules());
+            var render = new DefaultTextRender(Utils.GetAllAvailableRules());
             var parsed = new List<ParsedSubline>()
             {
                 new ParsedSubline(leftBorderOfSubline, rightBorderOfSubline, 
@@ -38,7 +38,7 @@ namespace Markdown
             var paragraphTag = new ParsedSubline(-1, line.Length, new Paragraph());
             var parsed = new List<ParsedSubline>() { cursiveTag, boldTag, paragraphTag };
             
-            var render = new TextRender(Utils.GetAllAvailableRules());
+            var render = new DefaultTextRender(Utils.GetAllAvailableRules());
             var result = render.RenderLine(line, parsed);
 
             result.Should().BeEquivalentTo("<p><em>a</em> <strong>b</strong></p>");
@@ -52,7 +52,7 @@ namespace Markdown
             var boldTag = new ParsedSubline(1, 3, new Cursive());
             var parsed = new List<ParsedSubline>() { headerTag, boldTag };
             
-            var render = new TextRender(Utils.GetAllAvailableRules());
+            var render = new DefaultTextRender(Utils.GetAllAvailableRules());
             var result = render.RenderLine(line, parsed);
 
             result.Should().BeEquivalentTo("<h1><em>a</em></h1>");        
@@ -62,7 +62,7 @@ namespace Markdown
         public void CorrectRendering_WhenRenderHeaderTag()
         {
             var line = "#kek";
-            var render = new TextRender(Utils.GetAllAvailableRules());
+            var render = new DefaultTextRender(Utils.GetAllAvailableRules());
             var parsed = new List<ParsedSubline>()
             {
                 new ParsedSubline(0, 4, Utils.GetAllAvailableRules().First(e => e.MarkupTag == "#"))
@@ -73,6 +73,24 @@ namespace Markdown
             actual.Should().Be("<h1>kek</h1>");
 
         }
-        
+
+        [TestCase("")]
+        [TestCase("kek")]
+        [TestCase("this text is real complex")]
+        [TestCase("kek_cheburek")]
+        [TestCase("_kek")]
+        [TestCase("kek_")]
+        [TestCase("ke___k")]
+        [TestCase("k#ek")]
+        [TestCase("kek#")]
+        public void CorrectMarkup_WhenNothingToMarkup(string s)
+        {
+            var rules = Utils.GetAllAvailableRules();
+
+            var render = new DefaultTextRender(Utils.GetAllAvailableRules());
+
+            render.RenderToHtml(s).Contains($"<p>{s}</p>");
+        }
     }
+    
 }

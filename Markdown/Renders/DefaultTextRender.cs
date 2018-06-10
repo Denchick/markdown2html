@@ -2,19 +2,37 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Markdown.Renders;
 using static System.ValueTuple;
 
 namespace Markdown
 {
-    public class TextRender
+    public class DefaultTextRender : ITextRender
     {
         private List<IMarkupRule> CurrentMarkupRules { get; }
 
-        public TextRender(List<IMarkupRule> rules)
+        public DefaultTextRender(IEnumerable<IMarkupRule> rules)
         {
-            CurrentMarkupRules = rules;
+            CurrentMarkupRules = rules
+                .Where(e => e?.MarkupTag != null)
+                .OrderBy(e => e.MarkupTag.Length)
+                .ToList();
         }
-        
+
+        public string RenderToHtml(string markdown)
+        {
+            var result = new StringBuilder();
+            var parser = new TextParser(CurrentMarkupRules);
+            var render = new DefaultTextRender(CurrentMarkupRules);
+            foreach (var line in markdown.Split(new string[] { "\n\n" }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                var parsed = parser.ParseLine(line);
+                var rendered = render.RenderLine(line, parsed);
+                result.Append($"{rendered}\n");
+            }
+            return result.ToString();
+        }
+
         public string RenderLine(string line, IEnumerable<ParsedSubline> parsed)
         {
             var indexAndTagValueTuples = GetHtmlTagsOrderedByIndex(parsed);

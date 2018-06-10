@@ -21,7 +21,7 @@ namespace Markdown
                    char.IsWhiteSpace(Convert.ToChar(line[index - 1]));
         }
 
-        public static List<IMarkupRule> GetAllAvailableRules()
+        public static IEnumerable<IMarkupRule> GetAllAvailableRules()
         {
             return new List<IMarkupRule>() { new Bold(), new Cursive(), new Header(), new Paragraph(), new Code() };
         }

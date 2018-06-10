@@ -38,6 +38,9 @@
     <Reference Include="FluentAssertions, Version=5.3.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.3.2\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=3.10.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.10.1\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
@@ -54,24 +57,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bindings.cs" />
     <Compile Include="MarkupRules\Bold.cs" />
     <Compile Include="MarkupRules\Code.cs" />
     <Compile Include="MarkupRules\Cursive.cs" />
     <Compile Include="MarkupRules\Header.cs" />
     <Compile Include="MarkupRules\IMarkupRule.cs" />
     <Compile Include="MarkupRules\Paragraph.cs" />
-    <Compile Include="Md.cs" />
     <Compile Include="Parsers\IMarkupTagsParser.cs" />
     <Compile Include="Parsers\PairedMarkupTagParser.cs" />
     <Compile Include="Parsers\ParagraphTagsParser.cs" />
     <Compile Include="Parsers\SingleMarkupTagsParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\Md_ShouldRender.cs" />
+    <Compile Include="Renders\ITextRender.cs" />
     <Compile Include="Tests\TextParser_Should.cs" />
-    <Compile Include="Tests\TextRender_Should.cs" />
+    <Compile Include="Tests\TextRenderDefault_Should.cs" />
     <Compile Include="TextParser.cs" />
-    <Compile Include="TextRender.cs" />
+    <Compile Include="Renders\DefaultTextRender.cs" />
     <Compile Include="Utils\FromMarkupTagToHtml.cs" />
     <Compile Include="Utils\ParsedSubline.cs" />
     <Compile Include="Utils\Utils.cs" />
