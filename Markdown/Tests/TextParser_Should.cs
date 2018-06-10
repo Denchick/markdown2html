@@ -96,7 +96,7 @@ namespace Markdown
             var parser = new TextParser(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var result = parser.ParseLine(line);
 
-            var headerTag = new ParsedSubline(0, line.Length, new Header1());
+            var headerTag = new ParsedSubline(0, line.Length, new Headers());
             var boldTag = new ParsedSubline(1, 3, new Cursive());
             var expected = new List<ParsedSubline>() { headerTag, boldTag };
             result.Should().BeEquivalentTo(expected);
