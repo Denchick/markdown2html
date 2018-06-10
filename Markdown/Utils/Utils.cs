@@ -28,8 +28,10 @@ namespace Markdown
             return new List<IMarkupRule>()
             {
                 new Bold(), new Cursive(),
-                new Header6(), new Header5(), new Header4(), new Header3(), new Header2(), new Header1(),
-                new Paragraph(), new Code()
+                new Header6(), new Header5(), new Header4(), new Header3(), new Header2(), new Headers(),
+                new Paragraph(), new Code(), 
+                new HorizontalRuleWith3Hyphens(), new HorizontalRuleWith3HyphensSeparatedBySpaces(),
+                new HorizontalRuleWith3Stars(), new HorizontalRuleWith3StarsSeparatedBySpaces(),
             };
         }
 

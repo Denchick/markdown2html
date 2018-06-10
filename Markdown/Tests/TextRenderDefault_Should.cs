@@ -48,7 +48,7 @@ namespace Markdown
         public void CorrectRendering_WhenNestingTagsInLine()
         {
             var line = "#_a_";
-            var headerTag = new ParsedSubline(0, line.Length, new Header1());
+            var headerTag = new ParsedSubline(0, line.Length, new Headers());
             var boldTag = new ParsedSubline(1, 3, new Cursive());
             var parsed = new List<ParsedSubline>() { headerTag, boldTag };
             
@@ -117,6 +117,22 @@ namespace Markdown
             var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
 
             render.RenderToHtml(input).Contains("<h1>Заголовок</h1>");
+        }
+
+        [TestCase("***")]
+        [TestCase("* * *")]
+        [TestCase("---")]
+        [TestCase("- - -")]
+        [TestCase("*** ")]
+        [TestCase(" ***")]
+        [TestCase("*** keke")]
+        [TestCase("ewf ***")]
+        [TestCase("kek***")]
+        public void CorrectMarkup_WhenHorizontalRule(string s)
+        {
+            var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
+
+            render.RenderToHtml(s).Contains($"<hr>");
         }
     }
     

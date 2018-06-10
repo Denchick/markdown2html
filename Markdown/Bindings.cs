@@ -20,9 +20,14 @@ public class Bindings : NinjectModule
         Bind<IMarkupRule>().To<Header4>();
         Bind<IMarkupRule>().To<Header3>();
         Bind<IMarkupRule>().To<Header2>();
-        Bind<IMarkupRule>().To<Header1>();
+        Bind<IMarkupRule>().To<Headers>();
         Bind<IMarkupRule>().To<Paragraph>();
         Bind<IMarkupRule>().To<ImageTag>();
+        Bind<IMarkupRule>().To<HorizontalRuleWith3Hyphens>();
+        Bind<IMarkupRule>().To<HorizontalRuleWith3HyphensSeparatedBySpaces>();
+        Bind<IMarkupRule>().To<HorizontalRuleWith3Stars>();
+        Bind<IMarkupRule>().To<HorizontalRuleWith3StarsSeparatedBySpaces>();
+
 
         Bind<IMarkupTagsParser>().To<PairedMarkupTagParser>();
         Bind<IMarkupTagsParser>().To<ParagraphTagsParser>();
