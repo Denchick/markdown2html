@@ -61,7 +61,12 @@
     <Compile Include="MarkupRules\Bold.cs" />
     <Compile Include="MarkupRules\Code.cs" />
     <Compile Include="MarkupRules\Cursive.cs" />
-    <Compile Include="MarkupRules\Header.cs" />
+    <Compile Include="MarkupRules\Header1.cs" />
+    <Compile Include="MarkupRules\Header2.cs" />
+    <Compile Include="MarkupRules\Header3.cs" />
+    <Compile Include="MarkupRules\Header4.cs" />
+    <Compile Include="MarkupRules\Header5.cs" />
+    <Compile Include="MarkupRules\Header6.cs" />
     <Compile Include="MarkupRules\IMarkupRule.cs" />
     <Compile Include="MarkupRules\Paragraph.cs" />
     <Compile Include="Parsers\IMarkupTagsParser.cs" />

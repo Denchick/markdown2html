@@ -12,7 +12,13 @@ public class Bindings : NinjectModule
         Bind<IMarkupRule>().To<Bold>();
         Bind<IMarkupRule>().To<Code>();
         Bind<IMarkupRule>().To<Cursive>();
-        Bind<IMarkupRule>().To<Header>();
+        Bind<IMarkupRule>().To<Header6>();
+        Bind<IMarkupRule>().To<Header6>();
+        Bind<IMarkupRule>().To<Header5>();
+        Bind<IMarkupRule>().To<Header4>();
+        Bind<IMarkupRule>().To<Header3>();
+        Bind<IMarkupRule>().To<Header2>();
+        Bind<IMarkupRule>().To<Header1>();
         Bind<IMarkupRule>().To<Paragraph>();
     }
 }

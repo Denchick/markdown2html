@@ -54,6 +54,9 @@ namespace Markdown
 
         [TestCase("#kek", "#", 0, 4)]
         [TestCase("# kek", "#", 0, 5)]
+        [TestCase("## kek", "##", 0, 6)]
+        [TestCase("### kek", "###", 0, 7)]
+        [TestCase("###### kek", "######", 0, 10)]
         public void CorrectParsing_WhenOneSingleMarkupTagInLine(string line, string markupTag, int leftParsedIndex, int rightParsedIndex)
         {
             var parser = new TextParser(Utils.GetAllAvailableRules());
@@ -90,7 +93,7 @@ namespace Markdown
             var parser = new TextParser(Utils.GetAllAvailableRules());
             var result = parser.ParseLine(line);
 
-            var headerTag = new ParsedSubline(0, line.Length, new Header());
+            var headerTag = new ParsedSubline(0, line.Length, new Header1());
             var boldTag = new ParsedSubline(1, 3, new Cursive());
             var expected = new List<ParsedSubline>() { headerTag, boldTag };
             result.Should().BeEquivalentTo(expected);

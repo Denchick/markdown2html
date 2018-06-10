@@ -48,7 +48,7 @@ namespace Markdown
         public void CorrectRendering_WhenNestingTagsInLine()
         {
             var line = "#_a_";
-            var headerTag = new ParsedSubline(0, line.Length, new Header());
+            var headerTag = new ParsedSubline(0, line.Length, new Header1());
             var boldTag = new ParsedSubline(1, 3, new Cursive());
             var parsed = new List<ParsedSubline>() { headerTag, boldTag };
             
@@ -85,11 +85,29 @@ namespace Markdown
         [TestCase("kek#")]
         public void CorrectMarkup_WhenNothingToMarkup(string s)
         {
-            var rules = Utils.GetAllAvailableRules();
-
             var render = new DefaultTextRender(Utils.GetAllAvailableRules());
 
             render.RenderToHtml(s).Contains($"<p>{s}</p>");
+        }
+
+        [Test]
+        public void CorrectMarkup_WhenMultipleTags_WithOneLineBreak()
+        {
+            var input = @"# Заголовок первого уровня
+## Заголовок h2
+### Заголовок h3
+#### Заголовок h4
+##### Заголовок h5
+###### Заголовок h6";
+            var expected = @"<h1>Заголовок первого уровня</h1>
+<h2>Заголовок h2</h2>
+<h3>Заголовок h3</h3>
+<h4>Заголовок h4</h4>
+<h5>Заголовок h5</h5>
+<h6>Заголовок h6</h6>";
+            var render = new DefaultTextRender(Utils.GetAllAvailableRules());
+
+            render.RenderToHtml(input).Contains(expected);
         }
     }
     

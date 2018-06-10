@@ -23,7 +23,12 @@ namespace Markdown
 
         public static IEnumerable<IMarkupRule> GetAllAvailableRules()
         {
-            return new List<IMarkupRule>() { new Bold(), new Cursive(), new Header(), new Paragraph(), new Code() };
+            return new List<IMarkupRule>()
+            {
+                new Bold(), new Cursive(),
+                new Header6(), new Header5(), new Header4(), new Header3(), new Header2(), new Header1(),
+                new Paragraph(), new Code()
+            };
         }
 
         public static string EscapeSpecialSymbols(string line, int index)
