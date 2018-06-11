@@ -38,6 +38,9 @@
     <Reference Include="FluentAssertions, Version=5.3.2.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentAssertions.5.3.2\lib\net45\FluentAssertions.dll</HintPath>
     </Reference>
+    <Reference Include="FluentCommandLineParser, Version=1.4.3.13, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentCommandLineParser-netstandard.1.4.3.13\lib\net45\FluentCommandLineParser.dll</HintPath>
+    </Reference>
     <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
     </Reference>
@@ -57,20 +60,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationCommand.cs" />
     <Compile Include="Bindings.cs" />
     <Compile Include="MarkupRules\Bold.cs" />
-    <Compile Include="MarkupRules\Code.cs" />
+    <Compile Include="MarkupRules\InlineCode.cs" />
     <Compile Include="MarkupRules\Cursive.cs" />
     <Compile Include="MarkupRules\Headers.cs" />
     <Compile Include="MarkupRules\Image.cs" />
     <Compile Include="MarkupRules\IMarkupRule.cs" />
     <Compile Include="MarkupRules\HorizontalRule.cs" />
-    <Compile Include="MarkupRules\Link.cs" />
-    <Compile Include="MarkupRules\Paragraph.cs" />
+    <Compile Include="MarkupRules\Link.cs" />    <Compile Include="MarkupRules\MultilineCode.cs" />    <Compile Include="MarkupRules\Paragraph.cs" />
     <Compile Include="TagsParsers\ImageTagParser.cs" />
     <Compile Include="TagsParsers\IMarkupTagsParser.cs" />
-    <Compile Include="TagsParsers\LinkTagsParser.cs" />
-    <Compile Include="TagsParsers\PairedMarkupTagParser.cs" />
+    <Compile Include="TagsParsers\LinkTagsParser.cs" />    <Compile Include="TagsParsers\MultilineCodeTagsParser.cs" />    <Compile Include="TagsParsers\PairedMarkupTagParser.cs" />
     <Compile Include="TagsParsers\ParagraphTagsParser.cs" />
     <Compile Include="TagsParsers\SingleMarkupTagsParser.cs" />
     <Compile Include="Program.cs" />

@@ -1,6 +1,6 @@
 ﻿namespace Markdown.MarkupRules
 {
-    public class Code : IMarkupRule
+    public class InlineCode : IMarkupRule
     {
         public string MarkupTag { get; } = "`";
         public string HtmlTag { get; } = "code";

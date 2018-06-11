@@ -27,7 +27,7 @@ namespace Markdown
             var result = new StringBuilder();
             var parser = new TextParser(CurrentMarkupRules, CurrentTagsParsers);
             var render = new DefaultTextRender(CurrentMarkupRules, CurrentTagsParsers);
-            foreach (var line in markdown.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var line in markdown.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
             {
                 var parsed = parser.ParseLine(line);
                 var rendered = render.RenderLine(line, parsed);

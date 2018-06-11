@@ -12,7 +12,7 @@ public class Bindings : NinjectModule
     {
         Bind<ITextRender>().To<DefaultTextRender>();
         Bind<IMarkupRule>().To<Bold>();
-        Bind<IMarkupRule>().To<Code>();
+        Bind<IMarkupRule>().To<InlineCode>();
         Bind<IMarkupRule>().To<Cursive>();
         Bind<IMarkupRule>().To<Header6>();
         Bind<IMarkupRule>().To<Header6>();
