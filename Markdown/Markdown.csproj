@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationCommand.cs" />
     <Compile Include="Bindings.cs" />
     <Compile Include="MarkupRules\Bold.cs" />
     <Compile Include="MarkupRules\InlineCode.cs" />
