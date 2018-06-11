@@ -16,7 +16,7 @@ namespace Markdown
 	{
 		private static void Main(string[] args)
 		{
-			var textFromFile = File.ReadAllText(@"..\..\Spec.md");
+			var textFromFile = File.ReadAllText(@"..\..\link.md");
 
 		    var kernel = new StandardKernel();
 		    kernel.Load(Assembly.GetExecutingAssembly());

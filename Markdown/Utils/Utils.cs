@@ -33,6 +33,7 @@ namespace Markdown
                 new Paragraph(), new Code(), 
                 new HorizontalRuleWith3Hyphens(), new HorizontalRuleWith3HyphensSeparatedBySpaces(),
                 new HorizontalRuleWith3Stars(), new HorizontalRuleWith3StarsSeparatedBySpaces(),
+                new ImageTag(), new Link(),
             };
         }
 
@@ -45,7 +46,8 @@ namespace Markdown
                 new PairedMarkupTagParser(rules),
                 new ParagraphTagsParser(rules),
                 new SingleMarkupTagsParser(rules),
-                new ImageTagParser(rules)
+                new ImageTagParser(rules),
+                new LinkTagsParser(rules),
             };
         }
 
