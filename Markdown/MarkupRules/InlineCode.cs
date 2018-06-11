@@ -1,4 +1,6 @@
-﻿namespace Markdown.MarkupRules
+﻿using System.Collections.Generic;
+
+namespace Markdown.MarkupRules
 {
     public class InlineCode : IMarkupRule
     {
@@ -7,5 +9,7 @@
         public bool HaveClosingMarkupTag { get; } = true;
         public bool HaveClosingHtmlTag { get; } = true;
         public bool HasAttribute { get; } = false;
+        public IEnumerable<TagAttribute> Attributes { get; }
+        public string GeneratedBody { get; } = "";
     }
 }

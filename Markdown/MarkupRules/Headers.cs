@@ -9,6 +9,8 @@ namespace Markdown.MarkupRules
         public bool HaveClosingMarkupTag { get; } = false;
         public bool HaveClosingHtmlTag { get; } = true;
         public bool HasAttribute { get; } = false;
+        public IEnumerable<TagAttribute> Attributes { get; }
+        public string GeneratedBody { get; }
     }
 
     internal class Header2 : IMarkupRule
@@ -18,15 +20,23 @@ namespace Markdown.MarkupRules
         public bool HaveClosingMarkupTag { get; } = false;
         public bool HaveClosingHtmlTag { get; } = true;
         public bool HasAttribute { get; } = false;
+        public IEnumerable<TagAttribute> Attributes { get; }
+        public string GeneratedBody { get; }
     }
 
     internal class Header3 : IMarkupRule
     {
+        public Header3()
+        {
+        }
+
         public string MarkupTag { get; } = "###";
         public string HtmlTag { get; } = "h3";
         public bool HaveClosingMarkupTag { get; } = false;
         public bool HaveClosingHtmlTag { get; } = true;
         public bool HasAttribute { get; } = false;
+        public IEnumerable<TagAttribute> Attributes { get; }
+        public string GeneratedBody { get; }
     }
 
     internal class Header4 : IMarkupRule
@@ -36,6 +46,8 @@ namespace Markdown.MarkupRules
         public bool HaveClosingMarkupTag { get; } = false;
         public bool HaveClosingHtmlTag { get; } = true;
         public bool HasAttribute { get; } = false;
+        public IEnumerable<TagAttribute> Attributes { get; }
+        public string GeneratedBody { get; }
     }
 
     internal class Header5 : IMarkupRule
@@ -45,6 +57,8 @@ namespace Markdown.MarkupRules
         public bool HaveClosingMarkupTag { get; } = false;
         public bool HaveClosingHtmlTag { get; } = true;
         public bool HasAttribute { get; } = false;
+        public IEnumerable<TagAttribute> Attributes { get; }
+        public string GeneratedBody { get; }
     }
 
     internal class Header6 : IMarkupRule
@@ -54,6 +68,8 @@ namespace Markdown.MarkupRules
         public bool HaveClosingMarkupTag { get; } = false;
         public bool HaveClosingHtmlTag { get; } = true;
         public bool HasAttribute { get; } = false;
+        public IEnumerable<TagAttribute> Attributes { get; }
+        public string GeneratedBody { get; }
     }
 
 

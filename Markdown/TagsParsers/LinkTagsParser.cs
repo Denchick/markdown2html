@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Markdown.MarkupRules;
@@ -28,10 +29,11 @@ namespace Markdown.TagsParsers
                 if (markdownTag.Length == 0 || !subLine.StartsWith(markdownTag.Value))
                     continue;
                 var text = markdownTag.Groups[2].Value;
-                var link = markdownTag.Groups[3].Value;
-                var title = markdownTag.Groups[4].Value;
-                var html = $"a href=\"{link}\" title=\"{title}\"> {text}";
-                result.Add(new ParsedSubline(i, new Link(){HtmlTag = html, MarkupTag = markdownTag.Groups[1].Value}));
+                var linkAttribute = new TagAttribute($"\"{markdownTag.Groups[3].Value}\"", "href"); ;
+                var titleAttribute = new TagAttribute(markdownTag.Groups[4].Value, "title");
+                var attributes = new List<TagAttribute> {linkAttribute, titleAttribute};
+                var linkTag = new Link(){MarkupTag = markdownTag.Groups[1].Value, Attributes = attributes, GeneratedBody = text};
+                result.Add(new ParsedSubline(i, i + markdownTag.Groups[1].Value.Length, linkTag));
                 i += markdownTag.Groups[1].Length;
             }
 

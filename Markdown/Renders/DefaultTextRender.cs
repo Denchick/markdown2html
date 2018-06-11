@@ -69,7 +69,10 @@ namespace Markdown
         {
             var markupRule = CurrentMarkupRules
                 .FirstOrDefault(e => e.HtmlTag == obj.TagName);
-            return obj.IsClosingHtmlTag ? $@"</{obj.TagName}>" : $"<{obj.TagName}>";
+            var attributes = "";
+            if(obj.Rule.HasAttribute && !obj.IsClosingHtmlTag)
+                attributes = string.Join(" ", obj.Rule.Attributes.Select(atr => $"{atr.Name}={atr.Value}").ToArray());
+            return obj.IsClosingHtmlTag ? $@"</{obj.TagName}>" : $"<{obj.TagName} {attributes}>{obj.Rule.GeneratedBody}";
         }
 
         private static IEnumerable<(int, FromMarkupTagToHtml)> GetHtmlTagsOrderedByIndex(IEnumerable<ParsedSubline> parsed)
@@ -81,10 +84,15 @@ namespace Markdown
                 var htmlTag = subline.MarkupRule.HtmlTag;
                 var lenght = subline.MarkupRule.MarkupTag.Length;
                 insertedTags.Add(
-                    (subline.LeftBorderOfSubline, new FromMarkupTagToHtml(htmlTag, false, lenght)));
+                    (subline.LeftBorderOfSubline, new FromMarkupTagToHtml(htmlTag, false, lenght, subline.MarkupRule)));
                 if (subline.MarkupRule.HaveClosingHtmlTag)
-                insertedTags.Add(
-                    (subline.RightBorderOfSubline, new FromMarkupTagToHtml(htmlTag, true, lenght)));
+                {
+                    if (!subline.MarkupRule.HaveClosingMarkupTag)
+                        lenght = 0;
+                    insertedTags.Add(
+                        (subline.RightBorderOfSubline, new FromMarkupTagToHtml(htmlTag, true, lenght,
+                            subline.MarkupRule)));
+                }
             }
             
             return insertedTags

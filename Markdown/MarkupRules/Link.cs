@@ -13,5 +13,7 @@ namespace Markdown.MarkupRules
         public bool HaveClosingMarkupTag { get; } = false;
         public bool HaveClosingHtmlTag { get; } = true;
         public bool HasAttribute { get; } = true;
+        public IEnumerable<TagAttribute> Attributes { get; set; }
+        public string GeneratedBody { get; set; }
     }
 }

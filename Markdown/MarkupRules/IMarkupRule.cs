@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Markdown.MarkupRules;
 
 namespace Markdown
 {
@@ -14,5 +11,7 @@ namespace Markdown
         bool HaveClosingMarkupTag { get; }
         bool HaveClosingHtmlTag { get; }
         bool HasAttribute { get; }
+        IEnumerable<TagAttribute> Attributes { get; }
+        string GeneratedBody { get; }
     }
 }

@@ -62,17 +62,22 @@
   <ItemGroup>
     <Compile Include="ApplicationCommand.cs" />
     <Compile Include="Bindings.cs" />
+    <Compile Include="MarkupRules\TagAttribute.cs" />
     <Compile Include="MarkupRules\Bold.cs" />
+    <Compile Include="MarkupRules\Headers.cs" />
     <Compile Include="MarkupRules\InlineCode.cs" />
     <Compile Include="MarkupRules\Cursive.cs" />
-    <Compile Include="MarkupRules\Headers.cs" />
     <Compile Include="MarkupRules\Image.cs" />
     <Compile Include="MarkupRules\IMarkupRule.cs" />
     <Compile Include="MarkupRules\HorizontalRule.cs" />
-    <Compile Include="MarkupRules\Link.cs" />    <Compile Include="MarkupRules\MultilineCode.cs" />    <Compile Include="MarkupRules\Paragraph.cs" />
+    <Compile Include="MarkupRules\Link.cs" />
+    <Compile Include="MarkupRules\MultilineCode.cs" />
+    <Compile Include="MarkupRules\Paragraph.cs" />
     <Compile Include="TagsParsers\ImageTagParser.cs" />
     <Compile Include="TagsParsers\IMarkupTagsParser.cs" />
-    <Compile Include="TagsParsers\LinkTagsParser.cs" />    <Compile Include="TagsParsers\MultilineCodeTagsParser.cs" />    <Compile Include="TagsParsers\PairedMarkupTagParser.cs" />
+    <Compile Include="TagsParsers\LinkTagsParser.cs" />
+    <Compile Include="TagsParsers\MultilineCodeTagsParser.cs" />
+    <Compile Include="TagsParsers\PairedMarkupTagParser.cs" />
     <Compile Include="TagsParsers\ParagraphTagsParser.cs" />
     <Compile Include="TagsParsers\SingleMarkupTagsParser.cs" />
     <Compile Include="Program.cs" />
