@@ -118,7 +118,7 @@ namespace Markdown
             var input = @"# Заголовок #";
             var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
 
-            render.RenderToHtml(input).Contains("<h1>Заголовок</h1>");
+            render.RenderToHtml(input).Equals("<h1>Заголовок</h1>");
         }
 
         [TestCase("***")]

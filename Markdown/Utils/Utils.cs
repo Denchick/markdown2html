@@ -30,7 +30,7 @@ namespace Markdown
             {
                 new Bold(), new Cursive(),
                 new Header6(), new Header5(), new Header4(), new Header3(), new Header2(), new Headers(),
-                new Paragraph(), new Code(), 
+                new Paragraph(), new InlineCode(), 
                 new HorizontalRuleWith3Hyphens(), new HorizontalRuleWith3HyphensSeparatedBySpaces(),
                 new HorizontalRuleWith3Stars(), new HorizontalRuleWith3StarsSeparatedBySpaces(),
             };
