@@ -17,7 +17,7 @@ namespace Markdown.Parsers
                 .Where(e => !e.HaveClosingMarkupTag && e.HasAttribute)
                 .OrderByDescending(e => e.MarkupTag.Length)
                 .ToList();
-        }
+        }   
 
         public IEnumerable<ParsedSubline> ParseLine(string line)
         {
@@ -30,10 +30,12 @@ namespace Markdown.Parsers
                 var tag = getFullMarkdownTag.Match(line.Substring(i));
                 if (tag.Length == 0)
                     continue;
-                var text = tag.Groups[1].Value;
+                var src = new TagAttribute(tag.Groups[2].Value, "src");
+                var alt = new TagAttribute(tag.Groups[1].Value, "alt");
+                var attributes = new List<TagAttribute>(){src, alt};
                 var newTag = new ImageTag
                 {
-                    HtmlTag = $"img src=\"{tag.Groups[2].Value}\" alt=\"{text}\"",
+                    Attributes = attributes,
                     MarkupTag = tag.Groups[0].Value
                 };
                 result.Add(new ParsedSubline(i, newTag));
