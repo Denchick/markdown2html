@@ -11,7 +11,7 @@ namespace Markdown.TagsParsers
         public PairedMarkupTagParser(List<IMarkupRule> currentMarkupRules)
         {
             CurrentMarkupRules = currentMarkupRules
-                .Where(e => e.HaveClosingMarkupTag)
+                .Where(e => e.HaveClosingMarkupTag && !e.UseForBlockText)
                 .OrderByDescending(e => e.MarkupTag.Length)
                 .ToList();
         }
@@ -38,6 +38,13 @@ namespace Markdown.TagsParsers
             }
             return result;
         }
+
+        public IEnumerable<ParsedSubline> ParseMultilineText(string multilineText)
+        {
+            return  new List<ParsedSubline>();
+        }
+
+        public bool UseParserForBlockText { get; } = false;
 
         private static ParsedSubline GetClosingElement(Stack<ParsedSubline> stack, IMarkupRule rule)
         {

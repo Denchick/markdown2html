@@ -11,6 +11,7 @@ namespace Markdown
         bool HaveClosingMarkupTag { get; }
         bool HaveClosingHtmlTag { get; }
         bool HasAttribute { get; }
+        bool UseForBlockText { get; set; }
         IEnumerable<TagAttribute> Attributes { get; }
         string GeneratedBody { get; }
     }

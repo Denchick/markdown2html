@@ -40,6 +40,13 @@ namespace Markdown.TagsParsers
             return result;
         }
 
+        public IEnumerable<ParsedSubline> ParseMultilineText(string multilineText)
+        {
+            return new List<ParsedSubline>();
+        }
+
+        public bool UseParserForBlockText { get; } = false;
+
         private IMarkupRule DetermineRuleOfSubline(string line, int i)
         {
 

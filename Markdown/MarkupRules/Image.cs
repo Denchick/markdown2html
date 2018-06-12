@@ -9,6 +9,7 @@ namespace Markdown.MarkupRules
         public bool HaveClosingMarkupTag { get; } = false;
         public bool HaveClosingHtmlTag { get; } = false;
         public bool HasAttribute { get; } = true;
+        public bool UseForBlockText { get; set; } = false;
         public IEnumerable<TagAttribute> Attributes { get; set; }
         public string GeneratedBody { get; }
     }

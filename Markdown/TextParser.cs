@@ -21,6 +21,7 @@ namespace Markdown
             CurrentTagsParsers = parsers.ToList();
         }
 
+
         public IEnumerable<ParsedSubline> ParseLine(string line)
         {
             var result = new List<ParsedSubline>();
@@ -29,6 +30,17 @@ namespace Markdown
             foreach (var parser in CurrentTagsParsers)
                 result.AddRange(parser.ParseLine(line));
             
+            return result;
+        }
+
+        public IEnumerable<ParsedSubline> ParseMultilineText(string line)
+        {
+            var result = new List<ParsedSubline>();
+            if (line is null) return result;
+
+            foreach (var parser in CurrentTagsParsers)
+                result.AddRange(parser.ParseMultilineText(line));
+
             return result;
         }
     }

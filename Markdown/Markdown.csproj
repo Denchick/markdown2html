@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="ApplicationCommand.cs" />
     <Compile Include="Bindings.cs" />
+    <Compile Include="MarkupRules\Quotation.cs" />
     <Compile Include="MarkupRules\TagAttribute.cs" />
     <Compile Include="MarkupRules\Bold.cs" />
     <Compile Include="MarkupRules\Headers.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="TagsParsers\MultilineCodeTagsParser.cs" />
     <Compile Include="TagsParsers\PairedMarkupTagParser.cs" />
     <Compile Include="TagsParsers\ParagraphTagsParser.cs" />
+    <Compile Include="TagsParsers\QuotationParser.cs" />
     <Compile Include="TagsParsers\SingleMarkupTagsParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

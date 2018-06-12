@@ -28,6 +28,8 @@ public class Bindings : NinjectModule
         Bind<IMarkupRule>().To<HorizontalRuleWith3Stars>();
         Bind<IMarkupRule>().To<HorizontalRuleWith3StarsSeparatedBySpaces>();
         Bind<IMarkupRule>().To<Link>();
+        Bind<IMarkupRule>().To<MultilineCode>();
+        Bind<IMarkupRule>().To<Quotation>();
 
 
         Bind<IMarkupTagsParser>().To<PairedMarkupTagParser>();
@@ -35,5 +37,7 @@ public class Bindings : NinjectModule
         Bind<IMarkupTagsParser>().To<SingleMarkupTagsParser>();
         Bind<IMarkupTagsParser>().To<ImageTagParser>();
         Bind<IMarkupTagsParser>().To<LinkTagsParser>();
+        Bind<IMarkupTagsParser>().To<QuotationParser>();
+        Bind<IMarkupTagsParser>().To<MultilineCodeTagsParser>();
     }
 }

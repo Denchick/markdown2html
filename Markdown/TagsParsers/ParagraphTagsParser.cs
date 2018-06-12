@@ -12,7 +12,7 @@ namespace Markdown.TagsParsers
         public ParagraphTagsParser(IEnumerable<IMarkupRule> currentMarkupRules)
         {
             CurrentMarkupRules = currentMarkupRules
-                .Where(e => !e.HaveClosingMarkupTag && !(e is Paragraph))
+                .Where(e => !e.HaveClosingMarkupTag && !(e is Paragraph) && !e.UseForBlockText)
                 .OrderByDescending(e => e.MarkupTag.Length)
                 .ToList();
         }
@@ -24,5 +24,12 @@ namespace Markdown.TagsParsers
                 result.Add(new ParsedSubline(-1, line.Length, new Paragraph()));
             return result;            
         }
+
+        public IEnumerable<ParsedSubline> ParseMultilineText(string multilineText)
+        {
+            return new List<ParsedSubline>();
+        }
+
+        public bool UseParserForBlockText { get; } = false;
     }
 }

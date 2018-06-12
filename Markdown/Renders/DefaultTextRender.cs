@@ -25,13 +25,25 @@ namespace Markdown
         public string RenderToHtml(string markdown)
         {
             var result = new StringBuilder();
-            var parser = new TextParser(CurrentMarkupRules, CurrentTagsParsers);
+            
             var render = new DefaultTextRender(CurrentMarkupRules, CurrentTagsParsers);
-            foreach (var line in markdown.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
+
+            var parser = new TextParser(CurrentMarkupRules.Where(r => r.UseForBlockText), CurrentTagsParsers.Where(p => p.UseParserForBlockText));
+            foreach (var line in markdown.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                var parsed = parser.ParseMultilineText(line);
+                var rendered = render.RenderLine(line, parsed);
+                result.Append($"{rendered}\r\n\r\n");
+            }
+
+            var neLline = result.ToString();
+            result.Clear();
+            parser = new TextParser(CurrentMarkupRules.Where(r => !r.UseForBlockText), CurrentTagsParsers);
+            foreach (var line in neLline.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
             {
                 var parsed = parser.ParseLine(line);
                 var rendered = render.RenderLine(line, parsed);
-                result.Append($"{rendered}\n");
+                result.Append($"{rendered}\r\n");
             }
             return result.ToString();
         }
@@ -71,8 +83,8 @@ namespace Markdown
                 .FirstOrDefault(e => e.HtmlTag == obj.TagName);
             var attributes = "";
             if(obj.Rule.HasAttribute && !obj.IsClosingHtmlTag)
-                attributes = string.Join(" ", obj.Rule.Attributes.Select(atr => $"{atr.Name}={atr.Value}").ToArray());
-            return obj.IsClosingHtmlTag ? $@"</{obj.TagName}>" : $"<{obj.TagName} {attributes}>{obj.Rule.GeneratedBody}";
+                attributes = string.Join(" ", obj.Rule.Attributes.Select(atr => $" {atr.Name}={atr.Value}").ToArray());
+            return obj.IsClosingHtmlTag ? $@"</{obj.TagName}>" : $"<{obj.TagName}{attributes}>{obj.Rule.GeneratedBody}";
         }
 
         private static IEnumerable<(int, FromMarkupTagToHtml)> GetHtmlTagsOrderedByIndex(IEnumerable<ParsedSubline> parsed)
