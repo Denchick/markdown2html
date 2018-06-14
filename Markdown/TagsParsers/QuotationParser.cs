@@ -6,7 +6,7 @@ using Markdown.MarkupRules;
 
 namespace Markdown.TagsParsers
 {
-    internal class QuotationParser : IMarkupTagsParser
+    internal class QuotationParser : IMultiLineParser
     {
         private readonly IMarkupRule quotationRule;
 
@@ -14,12 +14,8 @@ namespace Markdown.TagsParsers
         {
             quotationRule = new Quotation();
         }
-        public IEnumerable<ParsedSubline> ParseLine(string line)
-        {
-            return new List<ParsedSubline>();
-        }
 
-        private int GetNesting(string line)
+        private int GetQuoteNesting(string line)
         {
             var nesting = 0;
             foreach (var symbol in line)
@@ -36,10 +32,15 @@ namespace Markdown.TagsParsers
             return nesting;
         }
 
-        public IEnumerable<ParsedSubline> ParseMultilineText(string multilineText)
+        public IEnumerable<Token> ParseLine(string line)
+        {
+            return new List<Token>();
+        }
+
+        public IEnumerable<Token> ParseMultilineText(string multilineText)
         {
             var lineSeparatorLength = "\r\n".Length;
-            var result = new List<ParsedSubline>();
+            var result = new List<Token>();
             var lines = multilineText.Split(new[] {"\r\n"}, StringSplitOptions.None);
             var endIndex = 0;
             for (var i = 0; i < lines.Length; i++)
@@ -55,9 +56,9 @@ namespace Markdown.TagsParsers
                         endIndex += lines[j].Length  + lineSeparatorLength;
                     }
 
-                    for (int j = 0; j < GetNesting(lines[i]); j++)
+                    for (int j = 0; j < GetQuoteNesting(lines[i]); j++)
                     {
-                        result.Add(new ParsedSubline(beginIndex + j, endIndex, quotationRule));
+                        result.Add(new Token(beginIndex + j, endIndex, quotationRule));
                     }
                     endIndex += lineSeparatorLength;
                     i = indexOffset;

@@ -11,7 +11,7 @@ namespace Markdown.MarkupRules
         public bool HasAttribute { get; } = false;
         public bool UseForBlockText { get; set; } = false;
         public IEnumerable<TagAttribute> Attributes { get; }
-        public string GeneratedBody { get; }
+        public string TextInsideTag { get; }
     }
 
     internal class Header2 : IMarkupRule
@@ -23,7 +23,7 @@ namespace Markdown.MarkupRules
         public bool HasAttribute { get; } = false;
         public bool UseForBlockText { get; set; } = false;
         public IEnumerable<TagAttribute> Attributes { get; }
-        public string GeneratedBody { get; }
+        public string TextInsideTag { get; }
     }
 
     internal class Header3 : IMarkupRule
@@ -39,7 +39,7 @@ namespace Markdown.MarkupRules
         public bool HasAttribute { get; } = false;
         public bool UseForBlockText { get; set; } = false;
         public IEnumerable<TagAttribute> Attributes { get; }
-        public string GeneratedBody { get; }
+        public string TextInsideTag { get; }
     }
 
     internal class Header4 : IMarkupRule
@@ -51,7 +51,7 @@ namespace Markdown.MarkupRules
         public bool HasAttribute { get; } = false;
         public bool UseForBlockText { get; set; } = false;
         public IEnumerable<TagAttribute> Attributes { get; }
-        public string GeneratedBody { get; }
+        public string TextInsideTag { get; }
     }
 
     internal class Header5 : IMarkupRule
@@ -63,7 +63,7 @@ namespace Markdown.MarkupRules
         public bool HasAttribute { get; } = false;
         public bool UseForBlockText { get; set; } = false;
         public IEnumerable<TagAttribute> Attributes { get; }
-        public string GeneratedBody { get; }
+        public string TextInsideTag { get; }
     }
 
     internal class Header6 : IMarkupRule
@@ -75,7 +75,7 @@ namespace Markdown.MarkupRules
         public bool HasAttribute { get; } = false;
         public bool UseForBlockText { get; set; } = false;
         public IEnumerable<TagAttribute> Attributes { get; }
-        public string GeneratedBody { get; }
+        public string TextInsideTag { get; }
     }
 
 

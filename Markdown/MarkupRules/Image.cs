@@ -11,6 +11,6 @@ namespace Markdown.MarkupRules
         public bool HasAttribute { get; } = true;
         public bool UseForBlockText { get; set; } = false;
         public IEnumerable<TagAttribute> Attributes { get; set; }
-        public string GeneratedBody { get; }
+        public string TextInsideTag { get; }
     }
 }

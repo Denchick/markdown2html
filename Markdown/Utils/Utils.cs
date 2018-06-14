@@ -38,10 +38,10 @@ namespace Markdown
         }
 
         //Костыль
-        public static IEnumerable<IMarkupTagsParser> GetAllAvailableParsers()
+        public static IEnumerable<IParser> GetAllAvailableParsers()
         {
             var rules = GetAllAvailableRules().ToList();
-            return new List<IMarkupTagsParser>()
+            return new List<IParser>()
             {
                 new PairedMarkupTagParser(rules),
                 new ParagraphTagsParser(rules),

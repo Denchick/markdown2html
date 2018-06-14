@@ -10,7 +10,7 @@ public class Bindings : NinjectModule
 {
     public override void Load()
     {
-        Bind<ITextRender>().To<DefaultTextRender>();
+        Bind<ILanguageConverter>().To<DefaultHtmlConverter>();
         Bind<IMarkupRule>().To<Bold>();
         Bind<IMarkupRule>().To<InlineCode>();
         Bind<IMarkupRule>().To<Cursive>();
@@ -31,13 +31,12 @@ public class Bindings : NinjectModule
         Bind<IMarkupRule>().To<MultilineCode>();
         Bind<IMarkupRule>().To<Quotation>();
 
-
-        Bind<IMarkupTagsParser>().To<PairedMarkupTagParser>();
-        Bind<IMarkupTagsParser>().To<ParagraphTagsParser>();
-        Bind<IMarkupTagsParser>().To<SingleMarkupTagsParser>();
-        Bind<IMarkupTagsParser>().To<ImageTagParser>();
-        Bind<IMarkupTagsParser>().To<LinkTagsParser>();
-        Bind<IMarkupTagsParser>().To<QuotationParser>();
-        Bind<IMarkupTagsParser>().To<MultilineCodeTagsParser>();
+        Bind<IParser, IInLineParser>().To<PairedMarkupTagParser>();
+        Bind<IParser, IInLineParser>().To<ParagraphTagsParser>();
+        Bind<IParser, IInLineParser>().To<SingleMarkupTagsParser>();
+        Bind<IParser, IInLineParser>().To<ImageTagParser>();
+        Bind<IParser, IInLineParser>().To<LinkTagsParser>();
+        Bind<IParser, IMultiLineParser>().To<QuotationParser>();
+        Bind<IParser, IMultiLineParser>().To<MultilineCodeTagsParser>();
     }
 }

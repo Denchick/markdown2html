@@ -5,7 +5,7 @@ using NUnit.Framework.Internal;
 
 namespace Markdown.TagsParsers
 {
-    public class ParagraphTagsParser : IMarkupTagsParser
+    public class ParagraphTagsParser : IInLineParser
     {
         private List<IMarkupRule> CurrentMarkupRules { get; }
 
@@ -17,17 +17,17 @@ namespace Markdown.TagsParsers
                 .ToList();
         }
 
-        public IEnumerable<ParsedSubline> ParseLine(string line)
+        public IEnumerable<Token> ParseLine(string line)
         {
-            var result = new List<ParsedSubline>();
+            var result = new List<Token>();
             if (!CurrentMarkupRules.Any(e => line.StartsWith(e.MarkupTag)))
-                result.Add(new ParsedSubline(-1, line.Length, new Paragraph()));
+                result.Add(new Token(-1, line.Length, new Paragraph()));
             return result;            
         }
 
-        public IEnumerable<ParsedSubline> ParseMultilineText(string multilineText)
+        public IEnumerable<Token> ParseMultilineText(string multilineText)
         {
-            return new List<ParsedSubline>();
+            return new List<Token>();
         }
 
         public bool UseParserForBlockText { get; } = false;

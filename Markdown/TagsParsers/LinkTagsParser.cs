@@ -6,7 +6,7 @@ using Markdown.MarkupRules;
 
 namespace Markdown.TagsParsers
 {
-    internal class LinkTagsParser : IMarkupTagsParser
+    internal class LinkTagsParser : IInLineParser
     {
         private IEnumerable<IMarkupRule> CurrentMarkupRules;
         private Regex getMarkdownTag = new Regex("[^!](\\[(.*?)\\]\\(([\\S]*)(.*?)\\))");
@@ -16,9 +16,9 @@ namespace Markdown.TagsParsers
             CurrentMarkupRules = rules.Where(r => r.HasAttribute && r.HaveClosingHtmlTag);
         }
 
-        public IEnumerable<ParsedSubline> ParseLine(string line)
+        public IEnumerable<Token> ParseLine(string line)
         {
-            var result = new List<ParsedSubline>();
+            var result = new List<Token>();
             for (int i = 0; i < line.Length; i++)
             {
                 if (DetermineRuleOfSubline(line, i) == null)
@@ -32,17 +32,17 @@ namespace Markdown.TagsParsers
                 var linkAttribute = new TagAttribute($"\"{markdownTag.Groups[3].Value}\"", "href"); ;
                 var titleAttribute = new TagAttribute(markdownTag.Groups[4].Value, "title");
                 var attributes = new List<TagAttribute> {linkAttribute, titleAttribute};
-                var linkTag = new Link(){MarkupTag = markdownTag.Groups[1].Value, Attributes = attributes, GeneratedBody = text};
-                result.Add(new ParsedSubline(i, i + markdownTag.Groups[1].Value.Length, linkTag));
+                var linkTag = new Link(){MarkupTag = markdownTag.Groups[1].Value, Attributes = attributes, TextInsideTag = text};
+                result.Add(new Token(i, i + markdownTag.Groups[1].Value.Length, linkTag));
                 i += markdownTag.Groups[1].Length;
             }
 
             return result;
         }
 
-        public IEnumerable<ParsedSubline> ParseMultilineText(string multilineText)
+        public IEnumerable<Token> ParseMultilineText(string multilineText)
         {
-            return new List<ParsedSubline>();
+            return new List<Token>();
         }
 
         public bool UseParserForBlockText { get; } = false;

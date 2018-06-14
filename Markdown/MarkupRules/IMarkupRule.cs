@@ -13,6 +13,6 @@ namespace Markdown
         bool HasAttribute { get; }
         bool UseForBlockText { get; set; }
         IEnumerable<TagAttribute> Attributes { get; }
-        string GeneratedBody { get; }
+        string TextInsideTag { get; }
     }
 }

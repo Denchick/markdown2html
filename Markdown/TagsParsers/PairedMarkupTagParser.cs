@@ -4,7 +4,7 @@ using Markdown.MarkupRules;
 
 namespace Markdown.TagsParsers
 {
-    public class PairedMarkupTagParser : IMarkupTagsParser
+    public class PairedMarkupTagParser : IInLineParser
     {
         private List<IMarkupRule> CurrentMarkupRules { get; }
 
@@ -16,17 +16,17 @@ namespace Markdown.TagsParsers
                 .ToList();
         }
 
-        public IEnumerable<ParsedSubline> ParseLine(string line)
+        public IEnumerable<Token> ParseLine(string line)
         {
-            var result = new List<ParsedSubline>();
-            var stackOfOpenedTags = new Stack<ParsedSubline>();
+            var result = new List<Token>();
+            var stackOfOpenedTags = new Stack<Token>();
             for (var index = 0; index < line.Length; index++)
             {
                 var rule = DetermineRuleOfSubline(line, index);
                 if (rule == null) continue;
 
                 if (Utils.CanBeOpenningTag(line, index))
-                    stackOfOpenedTags.Push(new ParsedSubline(index, rule));
+                    stackOfOpenedTags.Push(new Token(index, rule));
                 else if (Utils.CanBeClosingTag(line, index, rule.MarkupTag.Length))
                 {
                     var element = GetClosingElement(stackOfOpenedTags, rule);
@@ -39,14 +39,14 @@ namespace Markdown.TagsParsers
             return result;
         }
 
-        public IEnumerable<ParsedSubline> ParseMultilineText(string multilineText)
+        public IEnumerable<Token> ParseMultilineText(string multilineText)
         {
-            return  new List<ParsedSubline>();
+            return  new List<Token>();
         }
 
         public bool UseParserForBlockText { get; } = false;
 
-        private static ParsedSubline GetClosingElement(Stack<ParsedSubline> stack, IMarkupRule rule)
+        private static Token GetClosingElement(Stack<Token> stack, IMarkupRule rule)
         {
             while (stack.Count > 0)
             {

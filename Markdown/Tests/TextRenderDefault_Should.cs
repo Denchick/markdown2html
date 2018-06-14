@@ -18,12 +18,12 @@ namespace Markdown
         public void CorrectRending_WhenNeedsRenderingOneTag(string line, string markupTag, 
             int leftBorderOfSubline, int rightBorderOfSubline, string expected)
         {   
-            var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
-            var parsed = new List<ParsedSubline>()
+            var render = new DefaultHtmlConverter(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
+            var parsed = new List<Token>()
             {
-                new ParsedSubline(leftBorderOfSubline, rightBorderOfSubline, 
+                new Token(leftBorderOfSubline, rightBorderOfSubline, 
                     Utils.GetAllAvailableRules().First(e => e.MarkupTag == markupTag)),
-                new ParsedSubline(-1, line.Length, new Paragraph())
+                new Token(-1, line.Length, new Paragraph())
             };
             
             var actual = render.RenderLine(line, parsed);
@@ -35,12 +35,12 @@ namespace Markdown
         public void CorrectRendering_WhenFewTagsInLine()
         {
             var line = "_a_ __b__";
-            var cursiveTag = new ParsedSubline(0, 2, new Cursive());
-            var boldTag = new ParsedSubline(4, 7, new Bold());
-            var paragraphTag = new ParsedSubline(-1, line.Length, new Paragraph());
-            var parsed = new List<ParsedSubline>() { cursiveTag, boldTag, paragraphTag };
+            var cursiveTag = new Token(0, 2, new Cursive());
+            var boldTag = new Token(4, 7, new Bold());
+            var paragraphTag = new Token(-1, line.Length, new Paragraph());
+            var parsed = new List<Token>() { cursiveTag, boldTag, paragraphTag };
             
-            var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
+            var render = new DefaultHtmlConverter(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var result = render.RenderLine(line, parsed);
 
             result.Should().BeEquivalentTo("<p><em>a</em> <strong>b</strong></p>");
@@ -50,11 +50,11 @@ namespace Markdown
         public void CorrectRendering_WhenNestingTagsInLine()
         {
             var line = "#_a_";
-            var headerTag = new ParsedSubline(0, line.Length, new Headers());
-            var boldTag = new ParsedSubline(1, 3, new Cursive());
-            var parsed = new List<ParsedSubline>() { headerTag, boldTag };
+            var headerTag = new Token(0, line.Length, new Headers());
+            var boldTag = new Token(1, 3, new Cursive());
+            var parsed = new List<Token>() { headerTag, boldTag };
             
-            var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
+            var render = new DefaultHtmlConverter(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var result = render.RenderLine(line, parsed);
 
             result.Should().BeEquivalentTo("<h1><em>a</em></h1>");        
@@ -64,10 +64,10 @@ namespace Markdown
         public void CorrectRendering_WhenRenderHeaderTag()
         {
             var line = "#kek";
-            var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
-            var parsed = new List<ParsedSubline>()
+            var render = new DefaultHtmlConverter(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
+            var parsed = new List<Token>()
             {
-                new ParsedSubline(0, 4, Utils.GetAllAvailableRules().First(e => e.MarkupTag == "#"))
+                new Token(0, 4, Utils.GetAllAvailableRules().First(e => e.MarkupTag == "#"))
             };
             
             var actual = render.RenderLine(line, parsed);
@@ -87,9 +87,9 @@ namespace Markdown
         [TestCase("kek#")]
         public void CorrectMarkup_WhenNothingToMarkup(string s)
         {
-            var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
+            var render = new DefaultHtmlConverter(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
 
-            render.RenderToHtml(s).Contains($"<p>{s}</p>");
+            render.ConvertToFormat(s).Contains($"<p>{s}</p>");
         }
 
         [Test]
@@ -107,18 +107,18 @@ namespace Markdown
 <h4>Заголовок h4</h4>
 <h5>Заголовок h5</h5>
 <h6>Заголовок h6</h6>";
-            var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
+            var render = new DefaultHtmlConverter(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
 
-            render.RenderToHtml(input).Contains(expected);
+            render.ConvertToFormat(input).Contains(expected);
         }
 
         [Test]
         public void CorrectMarkup_WhenHeaderTagHaveClosingMarkupTag()
         {
             var input = @"# Заголовок #";
-            var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
+            var render = new DefaultHtmlConverter(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
 
-            render.RenderToHtml(input).Equals("<h1>Заголовок</h1>");
+            render.ConvertToFormat(input).Equals("<h1>Заголовок</h1>");
         }
 
         [TestCase("***")]
@@ -132,9 +132,9 @@ namespace Markdown
         [TestCase("kek***")]
         public void CorrectMarkup_WhenHorizontalRule(string s)
         {
-            var render = new DefaultTextRender(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
+            var render = new DefaultHtmlConverter(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
 
-            render.RenderToHtml(s).Contains($"<hr>");
+            render.ConvertToFormat(s).Contains($"<hr>");
         }
 
         [TestCase("![авыаыв	](http://p/1.jpg)", "http://p/1.jpg", "авыаыв	")]
@@ -144,9 +144,9 @@ namespace Markdown
         public void CorrectRenderImage(string text, string link, string alt, string otherText = "")
         {
             var imgTag = new IMarkupRule[] {new ImageTag(),};
-            var render = new DefaultTextRender(imgTag, new IMarkupTagsParser[] {new ImageTagParser(imgTag)});
+            var render = new DefaultHtmlConverter(imgTag, new IParser[] {new ImageTagParser(imgTag)});
             var html = $"{otherText}<img src=\"{link}\" alt=\"{alt}\">\n";
-            var result = render.RenderToHtml(text);
+            var result = render.ConvertToFormat(text);
             result.Should().BeEquivalentTo(html);
         }
     }

@@ -3,7 +3,7 @@ using Markdown.MarkupRules;
 
 namespace Markdown.TagsParsers
 {
-    class MultilineCodeTagsParser : IMarkupTagsParser
+    class MultilineCodeTagsParser : IMultiLineParser
     {
         private readonly IMarkupRule rule;
 
@@ -12,9 +12,9 @@ namespace Markdown.TagsParsers
             rule = new MultilineCode();
         }
 
-        public IEnumerable<ParsedSubline> ParseMultilineText(string multilineText)
+        public IEnumerable<Token> ParseMultilineText(string multilineText)
         {
-            var result = new List<ParsedSubline>();
+            var result = new List<Token>();
             
             var offset = 0;
             while (multilineText.Length != 0)
@@ -31,7 +31,7 @@ namespace Markdown.TagsParsers
                 var finishTag = multilineText.Substring(beginingTag + rule.MarkupTag.Length).IndexOf(rule.MarkupTag);
                 if (finishTag == -1)
                     return result;
-                result.Add(new ParsedSubline(beginingTag + offset, finishTag + offset + rule.MarkupTag.Length, rule));
+                result.Add(new Token(beginingTag + offset, finishTag + offset + rule.MarkupTag.Length, rule));
                 multilineText = multilineText.Substring(finishTag + rule.MarkupTag.Length-1);
                 offset += finishTag;
             }
@@ -40,9 +40,9 @@ namespace Markdown.TagsParsers
             return result;
         }
 
-        public IEnumerable<ParsedSubline> ParseLine(string multilineText)
+        public IEnumerable<Token> ParseLine(string multilineText)
         {
-            return new List<ParsedSubline>();
+            return new List<Token>();
         }
 
         public bool UseParserForBlockText { get; } = true;

@@ -6,7 +6,7 @@ using Markdown.TagsParsers;
 
 namespace Markdown.Parsers
 {
-    internal class ImageTagParser : IMarkupTagsParser
+    internal class ImageTagParser : IInLineParser
     {
 
         private List<IMarkupRule> CurrentMarkupRules { get; }
@@ -19,9 +19,9 @@ namespace Markdown.Parsers
                 .ToList();
         }   
 
-        public IEnumerable<ParsedSubline> ParseLine(string line)
+        public IEnumerable<Token> ParseLine(string line)
         {
-            var result = new List<ParsedSubline>();
+            var result = new List<Token>();
 
             for (var i = 0; i < line.Length; i++)
             {
@@ -38,16 +38,16 @@ namespace Markdown.Parsers
                     Attributes = attributes,
                     MarkupTag = tag.Groups[0].Value
                 };
-                result.Add(new ParsedSubline(i, newTag));
+                result.Add(new Token(i, newTag));
                 i += tag.Length;
             }
 
             return result;
         }
 
-        public IEnumerable<ParsedSubline> ParseMultilineText(string multilineText)
+        public IEnumerable<Token> ParseMultilineText(string multilineText)
         {
-            return new List<ParsedSubline>();
+            return new List<Token>();
         }
 
         public bool UseParserForBlockText { get; } = false;

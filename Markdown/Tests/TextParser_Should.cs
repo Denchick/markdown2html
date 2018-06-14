@@ -28,9 +28,9 @@ namespace Markdown
             var parser = new TextParser(rules, Utils.GetAllAvailableParsers());
             var result = parser.ParseLine(line);
 
-            var expected = new List<ParsedSubline>()
+            var expected = new List<Token>()
             {
-                new ParsedSubline(-1, line.Length, new Paragraph())
+                new Token(-1, line.Length, new Paragraph())
             };
             result.Should().BeEquivalentTo(expected);
         }
@@ -45,11 +45,11 @@ namespace Markdown
             var parser = new TextParser(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var result = parser.ParseLine(line);
 
-            var expected = new List<ParsedSubline>()
+            var expected = new List<Token>()
             {
-                new ParsedSubline(-1, line.Length, Utils.GetAllAvailableRules()
+                new Token(-1, line.Length, Utils.GetAllAvailableRules()
                     .First(e => e.HtmlTag == "p")),
-                new ParsedSubline(leftParsedIndex, rightParsedIndex, Utils.GetAllAvailableRules()
+                new Token(leftParsedIndex, rightParsedIndex, Utils.GetAllAvailableRules()
                     .First(e => e.MarkupTag == markupTag))
             };
             result.Should().BeEquivalentTo(expected);
@@ -65,9 +65,9 @@ namespace Markdown
             var parser = new TextParser(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var result = parser.ParseLine(line);
 
-            var expected = new List<ParsedSubline>()
+            var expected = new List<Token>()
             {
-                new ParsedSubline(leftParsedIndex, rightParsedIndex, Utils.GetAllAvailableRules()
+                new Token(leftParsedIndex, rightParsedIndex, Utils.GetAllAvailableRules()
                     .First(e => e.MarkupTag == markupTag))
             };
             result.Should().BeEquivalentTo(expected);
@@ -81,10 +81,10 @@ namespace Markdown
             var parser = new TextParser(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var result = parser.ParseLine(line);
 
-            var cursiveTag = new ParsedSubline(0, 2, new Cursive());
-            var boldTag = new ParsedSubline(4, 7, new Bold());
-            var paragraphTag = new ParsedSubline(-1, line.Length, new Paragraph());
-            var expected = new List<ParsedSubline>() { cursiveTag, boldTag, paragraphTag };
+            var cursiveTag = new Token(0, 2, new Cursive());
+            var boldTag = new Token(4, 7, new Bold());
+            var paragraphTag = new Token(-1, line.Length, new Paragraph());
+            var expected = new List<Token>() { cursiveTag, boldTag, paragraphTag };
             result.Should().BeEquivalentTo(expected);
         }
 
@@ -96,9 +96,9 @@ namespace Markdown
             var parser = new TextParser(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var result = parser.ParseLine(line);
 
-            var headerTag = new ParsedSubline(0, line.Length, new Headers());
-            var boldTag = new ParsedSubline(1, 3, new Cursive());
-            var expected = new List<ParsedSubline>() { headerTag, boldTag };
+            var headerTag = new Token(0, line.Length, new Headers());
+            var boldTag = new Token(1, 3, new Cursive());
+            var expected = new List<Token>() { headerTag, boldTag };
             result.Should().BeEquivalentTo(expected);
         }
 
@@ -112,11 +112,11 @@ namespace Markdown
         [TestCase("asasas ![авыаыв	](http://p/1.jpg)", "http://p/1.jpg", "авыаыв	", 7)]
         public void CorrectParsingImageInSimpleLine(string text, string link, string alt, int leftBound)
         {
-            var parser = new TextParser(imgTag, new List<IMarkupTagsParser>() { new ImageTagParser(imgTag) });
+            var parser = new TextParser(imgTag, new List<IParser>() { new ImageTagParser(imgTag) });
             var result = parser.ParseLine(text);
             var html = $"img src=\"{link}\" alt=\"{alt}\"";
             var imageTag = new ImageTag() {HtmlTag = html, MarkupTag = getMarkdowFromText.Match(text).Value};
-            var expected = new List<ParsedSubline>(){new ParsedSubline(leftBound, imageTag)};
+            var expected = new List<Token>(){new Token(leftBound, imageTag)};
 
             result.Should().BeEquivalentTo(expected);
         }
@@ -126,9 +126,9 @@ namespace Markdown
         [TestCase("![dasbdjlsabjfbsbfbashbasbhfbsabfbshafhjsbfhbsahjfbhjsabfjaflbhal]")]
         public void ParsingIncorrectImageTag(string text)
         {
-            var parser = new TextParser(imgTag, new List<IMarkupTagsParser>(){new ImageTagParser(imgTag) } );
+            var parser = new TextParser(imgTag, new List<IParser>(){new ImageTagParser(imgTag) } );
             var result = parser.ParseLine(text);
-            var expected = new List<ParsedSubline>() { };
+            var expected = new List<Token>() { };
             result.Should().BeEquivalentTo(expected);
         }
     }

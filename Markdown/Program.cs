@@ -40,8 +40,8 @@ namespace Markdown
 		    var kernel = new StandardKernel();
 		    kernel.Load(Assembly.GetExecutingAssembly());
 
-		    var render = kernel.Get<ITextRender>();
-		    var result = render.RenderToHtml(textFromFile);
+		    var render = kernel.Get<ILanguageConverter>();
+		    var result = render.ConvertToFormat(textFromFile);
 		    using (var sw = new StreamWriter(parser.Object.OutputFilename))
             {
                 sw.WriteLine(result);

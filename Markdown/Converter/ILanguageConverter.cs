@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace Markdown.Renders
 {
-    interface ITextRender
+    interface ILanguageConverter
     {
-        string RenderToHtml(string markdown);
+        string ConvertToFormat(string markdown);
     }
 }

@@ -4,7 +4,7 @@ using Markdown.MarkupRules;
 
 namespace Markdown.TagsParsers
 {
-    public class SingleMarkupTagsParser : IMarkupTagsParser
+    public class SingleMarkupTagsParser : IInLineParser
     {
         private List<IMarkupRule> CurrentMarkupRules { get; }
 
@@ -16,27 +16,27 @@ namespace Markdown.TagsParsers
                 .ToList();
         }
 
-        public IEnumerable<ParsedSubline> ParseLine(string line)
+        public IEnumerable<Token> ParseLine(string line)
         {
             foreach (var currentMarkupRule in CurrentMarkupRules)
             {
                 if (!line.StartsWith(currentMarkupRule.MarkupTag)) continue;
                 if (line.EndsWith(currentMarkupRule.MarkupTag))
-                    return new List<ParsedSubline>()
+                    return new List<Token>()
                     {
-                        new ParsedSubline(0, line.Length - currentMarkupRule.MarkupTag.Length, currentMarkupRule)
+                        new Token(0, line.Length - currentMarkupRule.MarkupTag.Length, currentMarkupRule)
                     };
-                return new List<ParsedSubline>()
+                return new List<Token>()
                 {
-                    new ParsedSubline(0, line.Length, currentMarkupRule)
+                    new Token(0, line.Length, currentMarkupRule)
                 };
             }
-            return new List<ParsedSubline>();
+            return new List<Token>();
         }
 
-        public IEnumerable<ParsedSubline> ParseMultilineText(string multilineText)
+        public IEnumerable<Token> ParseMultilineText(string multilineText)
         {
-            return new List<ParsedSubline>();
+            return new List<Token>();
         }
 
         public bool UseParserForBlockText { get; } = false;

@@ -8,12 +8,13 @@ using static System.ValueTuple;
 
 namespace Markdown
 {
-    public class DefaultTextRender : ITextRender
+    public class DefaultHtmlConverter : ILanguageConverter
     {
         private List<IMarkupRule> CurrentMarkupRules { get; }
-        private List<IMarkupTagsParser> CurrentTagsParsers { get; }
+        private List<IParser> CurrentTagsParsers { get; }
 
-        public DefaultTextRender(IEnumerable<IMarkupRule> rules, IEnumerable<IMarkupTagsParser> parsers)
+
+        public DefaultHtmlConverter(IEnumerable<IMarkupRule> rules, IEnumerable<IParser> parsers)
         {
             CurrentMarkupRules = rules
                 .Where(e => e?.MarkupTag != null)
@@ -22,33 +23,30 @@ namespace Markdown
             CurrentTagsParsers = parsers.ToList();
         }
 
-        public string RenderToHtml(string markdown)
+        public string ConvertToFormat(string markdown)
         {
             var result = new StringBuilder();
-            
-            var render = new DefaultTextRender(CurrentMarkupRules, CurrentTagsParsers);
 
-            var parser = new TextParser(CurrentMarkupRules.Where(r => r.UseForBlockText), CurrentTagsParsers.Where(p => p.UseParserForBlockText));
+            var parser = new TextParser(CurrentMarkupRules, CurrentTagsParsers);
             foreach (var line in markdown.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.RemoveEmptyEntries))
             {
                 var parsed = parser.ParseMultilineText(line);
-                var rendered = render.RenderLine(line, parsed);
+                var rendered = RenderLine(line, parsed);
                 result.Append($"{rendered}\r\n\r\n");
             }
 
             var neLline = result.ToString();
             result.Clear();
-            parser = new TextParser(CurrentMarkupRules.Where(r => !r.UseForBlockText), CurrentTagsParsers);
             foreach (var line in neLline.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
             {
                 var parsed = parser.ParseLine(line);
-                var rendered = render.RenderLine(line, parsed);
+                var rendered = RenderLine(line, parsed);
                 result.Append($"{rendered}\r\n");
             }
             return result.ToString();
         }
 
-        public string RenderLine(string line, IEnumerable<ParsedSubline> parsed)
+        public string RenderLine(string line, IEnumerable<Token> parsed)
         {
             var indexAndTagValueTuples = GetHtmlTagsOrderedByIndex(parsed);
             var offsetAfterReplacingTags = 0;
@@ -84,10 +82,10 @@ namespace Markdown
             var attributes = "";
             if(obj.Rule.HasAttribute && !obj.IsClosingHtmlTag)
                 attributes = string.Join(" ", obj.Rule.Attributes.Select(atr => $" {atr.Name}={atr.Value}").ToArray());
-            return obj.IsClosingHtmlTag ? $@"</{obj.TagName}>" : $"<{obj.TagName}{attributes}>{obj.Rule.GeneratedBody}";
+            return obj.IsClosingHtmlTag ? $@"</{obj.TagName}>" : $"<{obj.TagName}{attributes}>{obj.Rule.TextInsideTag}";
         }
 
-        private static IEnumerable<(int, FromMarkupTagToHtml)> GetHtmlTagsOrderedByIndex(IEnumerable<ParsedSubline> parsed)
+        private static IEnumerable<(int, FromMarkupTagToHtml)> GetHtmlTagsOrderedByIndex(IEnumerable<Token> parsed)
         {
             var insertedTags = new List<(int, FromMarkupTagToHtml)>();
             

@@ -93,11 +93,11 @@ id sem consectetuer libero luctus adipiscing.
 > 1.   This is the first list item.
 > 2.   This is the second list item.
 >
-> > Вложенная цитата.
+>> Вложенная цитата.
 >
 > Here's some example code:
 >
->     return shell_exec("echo $input | $markdown_script");
+>     `return shell_exec("echo $input | $markdown_script");`
 
 ### Исходный код
 
@@ -239,3 +239,4 @@ Content Cell  | Content Cell
 Внутри таблиц можно использовать ссылки, наклонный, жирный или зачеркнутый текст.
 
 Для всего остального есть обычный HTML.
+
