@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Markdown.MarkupRules;
 using Markdown.Renders;
 using Markdown.TagsParsers;
 using static System.ValueTuple;
@@ -47,6 +48,20 @@ namespace Markdown
             return inlineParsed;
         }
 
+        private string ReplaceAngleBrackets(string text, IEnumerable<Token> parsed)
+        {
+            var result = new StringBuilder(text);
+            foreach (var token in parsed)
+            {
+                if (!(token.MarkupRule is MultilineCode)) continue;
+                result.Replace("<", "&lt;", token.LeftBorderOfSubline + token.MarkupRule.HtmlTag.Length + 2,
+                    token.RightBorderOfSubline - (token.LeftBorderOfSubline + token.MarkupRule.HtmlTag.Length + 2));
+                result.Replace(">", "&gt;", token.LeftBorderOfSubline + token.MarkupRule.HtmlTag.Length + 2,
+                    token.RightBorderOfSubline - (token.LeftBorderOfSubline + token.MarkupRule.HtmlTag.Length + 2));
+            }
+            return result.ToString();
+        }
+
         private string RemoveBlockquoteMarkDownTag(string line)
         {
             if (line.StartsWith(">"))
@@ -77,7 +92,7 @@ namespace Markdown
             {
                 var parsed = parser.ParseMultilineText(line);
                 var rendered = RenderLine(line, parsed);
-                result.Append($"{rendered}\r\n\r\n");
+                result.Append($"{ReplaceAngleBrackets(rendered, parsed)}\r\n\r\n");
             }
             return result;
         }
