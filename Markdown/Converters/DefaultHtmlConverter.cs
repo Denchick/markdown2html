@@ -31,13 +31,24 @@ namespace Markdown
             return inlineParsed;
         }
 
+        private string RemoveBlockquoteMarkDownTag(string line)
+        {
+            if (line.StartsWith(">"))
+            {
+                line = line.TrimStart('>', ' ');
+            }
+
+            return line;
+        }
+
         private StringBuilder ConvertByInlinesParsers(string markdownText, TextParser parser)
         {
             var result = new StringBuilder();
             foreach (var line in markdownText.Split(new string[] {"\r\n"}, StringSplitOptions.RemoveEmptyEntries))
             {
-                var parsed = parser.ParseLine(line);
-                var rendered = RenderLine(line, parsed);
+                var lineWithoutBlockQuoteTag = RemoveBlockquoteMarkDownTag(line);
+                var parsed = parser.ParseLine(lineWithoutBlockQuoteTag);
+                var rendered = RenderLine(lineWithoutBlockQuoteTag, parsed);
                 result.Append($"{rendered}\r\n");
             }
             return result;

@@ -12,7 +12,7 @@
 <h6> Заголовок h6</h6>
 <p>В декоративных целях заголовки можно «закрывать» с обратной стороны.</p>
 <h3>Картинки</h3>
-<img src=example.jpg  alt=example>
+<img src="example.jpg" alt="example">
 <h3> Списки</h3>
 <p>Для разметки неупорядоченных списков можно использовать или `*`, или `-`, или <code>+</code>:</p>
 <p>- элемент 1</p>
@@ -43,30 +43,30 @@
 <p>    Четыре абзац (Четыре пробела в начале или один tab).</p>
 <h3> Цитаты</h3>
 <p>Цитаты оформляются как в емейлах, с помощью символа <code>></code>.</p>
-<p><blockquote> This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,</p>
-<p>> consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.</p>
-<p>> Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</p>
-<p>></p>
-<p>> Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse</p>
-<p>> id sem consectetuer libero luctus adipiscing.</blockquote></p>
-<p>Или более ленивым способом, когда знак <code>></code> ставится перед каждым элементом цитаты, будь то абзац, заголовок или пустая строка:</p>
-<p><blockquote> This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,</p>
+<blockquote><p> This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,</p>
 <p>consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.</p>
 <p>Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</p>
-<p>></p>
-<p>> Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse</p>
-<p>id sem consectetuer libero luctus adipiscing.</blockquote></p>
+<p></p>
+<p>Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse</p>
+<p>id sem consectetuer libero luctus adipiscing.</p></blockquote>
+<p>Или более ленивым способом, когда знак <code>></code> ставится перед каждым элементом цитаты, будь то абзац, заголовок или пустая строка:</p>
+<blockquote><p> This is a blockquote with two paragraphs. Lorem ipsum dolor sit amet,</p>
+<p>consectetuer adipiscing elit. Aliquam hendrerit mi posuere lectus.</p>
+<p>Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.</p>
+<p></p>
+<p>Donec sit amet nisl. Aliquam semper ipsum sit amet velit. Suspendisse</p>
+<p>id sem consectetuer libero luctus adipiscing.</p></blockquote>
 <p>В цитаты можно помещать всё что угодно, в том числе вложенные цитаты:</p>
-<p><blockquote> ## This is a header.</p>
-<p>></p>
-<p>> 1.   This is the first list item.</p>
-<p>> 2.   This is the second list item.</p>
-<p>></p>
-<p><blockquote>> Вложенная цитата.</blockquote></p>
-<p>></p>
-<p>> Here's some example code:</p>
-<p>></p>
-<p>>     `return shell_exec("echo $input | $markdown_script");`</blockquote></p>
+<blockquote><p> ## This is a header.</p>
+<p></p>
+<p>1.   This is the first list item.</p>
+<p>2.   This is the second list item.</p>
+<p></p>
+<blockquote><p> Вложенная цитата.</p></blockquote>
+<p></p>
+<p>Here's some example code:</p>
+<p></p>
+<p>`return shell_exec("echo $input | $markdown_script");`</p></blockquote>
 <h3> Исходный код</h3>
 <p>В чистом Маркдауне блоки кода отбиваются 4 пробелами в начале каждой строки.</p>
 <p>Но в GitHub-Flavored Markdown (сокращенно GFM) есть более удобный способ: ставим по три апострофа (на букве Ё) до и после кода. Также можно указать язык исходного кода.</p>
@@ -100,7 +100,7 @@
 <p><code>hr</code> создается тремя звездочками или тремя дефисами.</p>
 <hr>
 <h3> Ссылки</h3>
-<p>Это встроенная <a href="http://example.com/link"  title= "Я ссылка">ссылка с title элементом</a>. Это — <a href="http://example.com/link"  title=>без title</a>.</p>
+<p>Это встроенная <a href=""http://example.com/link"" title=" "Я ссылка"">ссылка с title элементом</a>. Это — <a href=""http://example.com/link"" title="">без title</a>.</p>
 <p>А вот [пример][1] [нескольких][2] [ссылок][id] с разметкой как у сносок. Прокатит и [короткая запись][] без указания id.</p>
 [1]: http://example.com/ "Optional Title Here"
 [2]: http://example.com/some
@@ -115,9 +115,9 @@
 <p>~~Зачеркнуто~~</p>
 <h2> Картинки</h2>
 <p>Картинка без <code>alt</code> текста</p>
-<img src=//placehold.it/150x100  alt=>
+<img src="example.jpg" alt="">
 <p>Картинка с альтом и тайтлом:</p>
-<img src=//placehold.it/150x100 "Можно задать title"  alt=Alt text>
+<img src="example.jpg "Можно задать title"" alt="Alt text">
 <p>Запомнить просто: синтаксис как у ссылок, только перед открывающей квадратной скобкой ставится восклицательный знак.</p>
 <p>Картинки «сноски»:</p>
 ![Картинка][image1]
@@ -127,10 +127,10 @@
 [image2]: //placehold.it/200x100
 [image3]: //placehold.it/150x100
 <p>Картинки-ссылки:</p>
-<img src=http://example.com/  alt=Alt text](//placehold.it/150x100)>)
+<img src="http://example.com/" alt="Alt text](//placehold.it/150x100)">)
 <h2> Использование HTML внутри Markdown</h2>
 <p>Mожно смешивать Markdown и HTML. Если на какие-то элементы нужно поставить классы или атрибуты, смело используем HTML:</p>
-<p><blockquote> Выделять слова можно при помощи * и _ . Например, это <em class="a1">italic</em> и это тоже <i class="a1">italic</i>. А вот так уже <b>strong</b>, и так тоже <strong>strong</strong>.</blockquote></p>
+<blockquote><p> Выделять слова можно при помощи * и _ . Например, это <em class="a1">italic</em> и это тоже <i class="a1">italic</i>. А вот так уже <b>strong</b>, и так тоже <strong>strong</strong>.</p></blockquote>
 <p>Можно и наоборот, внутри HTML-тегов использовать Маркдаун.</p>
 <p><section class="someclass"></p>
 <h3> Пример Маркдауна внутри HTML</h3>

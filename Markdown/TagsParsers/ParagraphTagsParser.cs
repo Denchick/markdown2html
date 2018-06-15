@@ -20,8 +20,16 @@ namespace Markdown.TagsParsers
         public IEnumerable<Token> ParseLine(string line)
         {
             var result = new List<Token>();
-            if (!CurrentMarkupRules.Any(e => line.StartsWith(e.MarkupTag)))
-                result.Add(new Token(-1, line.Length, new Paragraph()));
+
+            if (CurrentMarkupRules.Any(e => line.StartsWith(e.MarkupTag))) return result;
+            var endTag = line.Length;
+            var startTag = -1;
+            if (line.EndsWith("</blockquote>"))
+                endTag = endTag - "</blockquote>".Length;
+            if (line.StartsWith("<blockquote>"))
+                startTag = "<blockquote>".Length;
+            result.Add(new Token(startTag, endTag, new Paragraph()));
+
             return result;            
         }
 

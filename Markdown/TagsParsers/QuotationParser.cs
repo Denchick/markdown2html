@@ -57,7 +57,7 @@ namespace Markdown.TagsParsers
                         {
                             for (int k = 0; k < nesting - 1; k++)
                             {
-                                result.Add(new Token(offset + k, offset + lines[j].Length, new Quotation()));
+                                result.Add(new Token(offset + k + 1, offset + lines[j].Length, new Quotation()));
                             }
                         }
                         offset += lines[j].Length + lineSeparatorLength;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using Markdown.MarkupRules;
@@ -148,6 +149,37 @@ namespace Markdown
             var html = $"{otherText}<img src=\"{link}\" alt=\"{alt}\">\r\n";
             var result = render.ConvertToFormat(text);
             result.Should().BeEquivalentTo(html);
+        }
+        
+        [TestCase("> kek kek kek")]
+        public void CorrectConvertInlineQuotation(string quotation)
+        {
+            var expected =  $"<blockquote><p>{quotation.TrimStart('>')}</p></blockquote>\r\n";
+            var converter = new DefaultHtmlConverter(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
+
+            var result = converter.ConvertToFormat(quotation);
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [TestCase("> kek \r\n>kek\r\n>kek")]
+        public void CorrectConvertMultilineQuotation(string quotation)
+        {
+            var lines = quotation.Split(new[] { "\r\n" }, StringSplitOptions.None).Select(line => line.TrimStart('>')).ToArray();
+            for (int i = 0; i < lines.Count(); i++)
+            {   
+                lines[i] = $"<p>{lines[i]}</p>";
+            }
+            var expected = $"<blockquote>{string.Join("\r\n", lines)}</blockquote>\r\n";
+            var converter = new DefaultHtmlConverter(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
+            var result = converter.ConvertToFormat(quotation);
+            result.Should().BeEquivalentTo(expected);
+        }
+        [TestCase(">kek\r\n>>kek\r\n>kek", "<blockquote><p>kek</p>\r\n<blockquote><p>kek</p></blockquote>\r\n<p>kek</p></blockquote>\r\n")]
+        public void CorrectConvertNesting(string quotation, string expected)
+        {
+            var converter = new DefaultHtmlConverter(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
+            var result = converter.ConvertToFormat(quotation);
+            result.Should().BeEquivalentTo(expected);
         }
     }
     
