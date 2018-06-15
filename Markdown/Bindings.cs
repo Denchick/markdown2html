@@ -10,28 +10,28 @@ public class Bindings : NinjectModule
 {
     public override void Load()
     {
-        Bind<ILanguageConverter>().To<DefaultHtmlConverter>();
-        Bind<IMarkupRule>().To<BoldRuleWithDoubleAsterisks>();
-        Bind<IMarkupRule>().To<BoldRuleWithDoubleUnderscores>();
-        Bind<IMarkupRule>().To<InlineCode>();
-        Bind<IMarkupRule>().To<CursiveRuleWithSingleAsterisks>();
-        Bind<IMarkupRule>().To<CursiveRuleWithSingleUnderscores>();
-        Bind<IMarkupRule>().To<Header6>();
-        Bind<IMarkupRule>().To<Header6>();
-        Bind<IMarkupRule>().To<Header5>();
-        Bind<IMarkupRule>().To<Header4>();
-        Bind<IMarkupRule>().To<Header3>();
-        Bind<IMarkupRule>().To<Header2>();
-        Bind<IMarkupRule>().To<Headers>();
-        Bind<IMarkupRule>().To<Paragraph>();
-        Bind<IMarkupRule>().To<ImageTag>();
-        Bind<IMarkupRule>().To<HorizontalRuleWith3Hyphens>();
-        Bind<IMarkupRule>().To<HorizontalRuleWith3HyphensSeparatedBySpaces>();
-        Bind<IMarkupRule>().To<HorizontalRuleWith3Stars>();
-        Bind<IMarkupRule>().To<HorizontalRuleWith3StarsSeparatedBySpaces>();
-        Bind<IMarkupRule>().To<Link>();
-        Bind<IMarkupRule>().To<MultilineCode>();
-        Bind<IMarkupRule>().To<Quotation>();
+        Bind<ILanguageConverter>().To<DefaultHtmlConverter>().InSingletonScope();
+        Bind<IMarkupRule>().To<BoldRuleWithDoubleAsterisks>().InSingletonScope();
+        Bind<IMarkupRule>().To<BoldRuleWithDoubleUnderscores>().InSingletonScope();
+        Bind<IMarkupRule>().To<InlineCode>().InSingletonScope();
+        Bind<IMarkupRule>().To<CursiveRuleWithSingleAsterisks>().InSingletonScope();
+        Bind<IMarkupRule>().To<CursiveRuleWithSingleUnderscores>().InSingletonScope();
+        Bind<IMarkupRule>().To<Header6>().InSingletonScope();
+        Bind<IMarkupRule>().To<Header6>().InSingletonScope();
+        Bind<IMarkupRule>().To<Header5>().InSingletonScope();
+        Bind<IMarkupRule>().To<Header4>().InSingletonScope();
+        Bind<IMarkupRule>().To<Header3>().InSingletonScope();
+        Bind<IMarkupRule>().To<Header2>().InSingletonScope();
+        Bind<IMarkupRule>().To<Headers>().InSingletonScope();
+        Bind<IMarkupRule>().To<Paragraph>().InSingletonScope();
+        Bind<IMarkupRule>().To<ImageTag>().InSingletonScope();
+        Bind<IMarkupRule>().To<HorizontalRuleWith3Hyphens>().InSingletonScope();
+        Bind<IMarkupRule>().To<HorizontalRuleWith3HyphensSeparatedBySpaces>().InSingletonScope();
+        Bind<IMarkupRule>().To<HorizontalRuleWith3Stars>().InSingletonScope();
+        Bind<IMarkupRule>().To<HorizontalRuleWith3StarsSeparatedBySpaces>().InSingletonScope();
+        Bind<IMarkupRule>().To<Link>().InSingletonScope();
+        Bind<IMarkupRule>().To<MultilineCode>().InSingletonScope();
+        Bind<IMarkupRule>().To<Quotation>().InSingletonScope();
 
         Bind<IParser, IInLineParser>().To<EmphasisTagParser>();
         Bind<IParser, IInLineParser>().To<ParagraphTagsParser>();
