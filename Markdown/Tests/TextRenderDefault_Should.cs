@@ -145,7 +145,7 @@ namespace Markdown
         {
             var imgTag = new IMarkupRule[] {new ImageTag(),};
             var render = new DefaultHtmlConverter(imgTag, new IParser[] {new ImageTagParser(imgTag)});
-            var html = $"{otherText}<img src=\"{link}\" alt=\"{alt}\">\n";
+            var html = $"{otherText}<img src=\"{link}\" alt=\"{alt}\">\r\n";
             var result = render.ConvertToFormat(text);
             result.Should().BeEquivalentTo(html);
         }

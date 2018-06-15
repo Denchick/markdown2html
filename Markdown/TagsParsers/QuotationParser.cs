@@ -25,10 +25,12 @@ namespace Markdown.TagsParsers
                     nesting++;
                     continue;
                 }
+
                 if (symbol == ' ')
                     continue;
                 return nesting;
             }
+
             return nesting;
         }
 
@@ -46,27 +48,31 @@ namespace Markdown.TagsParsers
             for (var i = 0; i < lines.Length; i++)
                 if (lines[i].StartsWith(quotationRule.MarkupTag))
                 {
+                    var offset = endIndex + lines[i].Length + lineSeparatorLength;
                     var beginIndex = endIndex;
-                    endIndex += lines[i].Length;
-                    var indexOffset = i;
-                    for (var j = i + 1; j < lines.Length; j++)
+                    for (int j = i + 1; j < lines.Length; j++)
                     {
-                        if (lines[j].StartsWith(quotationRule.MarkupTag)) break;
-                        indexOffset = j;
-                        endIndex += lines[j].Length  + lineSeparatorLength;
+                        var nesting = GetQuoteNesting(lines[j]);
+                        if (nesting > 1)
+                        {
+                            for (int k = 0; k < nesting - 1; k++)
+                            {
+                                result.Add(new Token(offset + k, offset + lines[j].Length, new Quotation()));
+                            }
+                        }
+                        offset += lines[j].Length + lineSeparatorLength;
                     }
-
-                    for (int j = 0; j < GetQuoteNesting(lines[i]); j++)
-                    {
-                        result.Add(new Token(beginIndex + j, endIndex, quotationRule));
-                    }
-                    endIndex += lineSeparatorLength;
-                    i = indexOffset;
+                    result.Add(new Token(beginIndex, multilineText.Length, quotationRule));
+                    return result;
                 }
-
+                else
+                {
+                    endIndex += lines[i].Length + lineSeparatorLength;
+                }
             return result;
         }
-
-        public bool UseParserForBlockText { get; } = true;
     }
+
+
 }
+
