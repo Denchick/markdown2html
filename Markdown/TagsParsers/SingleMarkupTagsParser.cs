@@ -12,7 +12,7 @@ namespace Markdown.TagsParsers
         {
             CurrentMarkupRules = currentMarkupRules
                 .Where(e => !e.HaveClosingMarkupTag && !(e is Paragraph) && !e.HasAttribute && !e.UseForBlockText)
-                .OrderByDescending(e => e.MarkupTag.Length)
+                .OrderByDescending(e => e.MarkdownTag.Length)
                 .ToList();
         }
 
@@ -20,11 +20,11 @@ namespace Markdown.TagsParsers
         {
             foreach (var currentMarkupRule in CurrentMarkupRules)
             {
-                if (!line.StartsWith(currentMarkupRule.MarkupTag)) continue;
-                if (line.EndsWith(currentMarkupRule.MarkupTag))
+                if (!line.StartsWith(currentMarkupRule.MarkdownTag)) continue;
+                if (line.EndsWith(currentMarkupRule.MarkdownTag))
                     return new List<Token>()
                     {
-                        new Token(0, line.Length - currentMarkupRule.MarkupTag.Length, currentMarkupRule)
+                        new Token(0, line.Length - currentMarkupRule.MarkdownTag.Length, currentMarkupRule)
                     };
                 return new List<Token>()
                 {

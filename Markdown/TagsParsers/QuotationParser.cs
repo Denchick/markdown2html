@@ -20,7 +20,7 @@ namespace Markdown.TagsParsers
             var nesting = 0;
             foreach (var symbol in line)
             {
-                if (symbol.ToString() == quotationRule.MarkupTag)
+                if (symbol.ToString() == quotationRule.MarkdownTag)
                 {
                     nesting++;
                     continue;
@@ -46,7 +46,7 @@ namespace Markdown.TagsParsers
             var lines = multilineText.Split(new[] {"\r\n"}, StringSplitOptions.None);
             var endIndex = 0;
             for (var i = 0; i < lines.Length; i++)
-                if (lines[i].StartsWith(quotationRule.MarkupTag))
+                if (lines[i].StartsWith(quotationRule.MarkdownTag))
                 {
                     var offset = endIndex + lines[i].Length + lineSeparatorLength;
                     var beginIndex = endIndex;

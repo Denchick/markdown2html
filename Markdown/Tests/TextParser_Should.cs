@@ -50,7 +50,7 @@ namespace Markdown
                 new Token(-1, line.Length, Utils.GetAllAvailableRules()
                     .First(e => e.HtmlTag == "p")),
                 new Token(leftParsedIndex, rightParsedIndex, Utils.GetAllAvailableRules()
-                    .First(e => e.MarkupTag == markupTag))
+                    .First(e => e.MarkdownTag == markupTag))
             };
             result.Should().BeEquivalentTo(expected);
         }
@@ -68,7 +68,7 @@ namespace Markdown
             var expected = new List<Token>()
             {
                 new Token(leftParsedIndex, rightParsedIndex, Utils.GetAllAvailableRules()
-                    .First(e => e.MarkupTag == markupTag))
+                    .First(e => e.MarkdownTag == markupTag))
             };
             result.Should().BeEquivalentTo(expected);
         }
@@ -81,7 +81,7 @@ namespace Markdown
             var parser = new TextParser(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var result = parser.ParseLine(line);
 
-            var cursiveTag = new Token(0, 2, new Cursive());
+            var cursiveTag = new Token(0, 2, new CursiveRuleWithSingleUnderscores());
             var boldTag = new Token(4, 7, new Bold());
             var paragraphTag = new Token(-1, line.Length, new Paragraph());
             var expected = new List<Token>() { cursiveTag, boldTag, paragraphTag };
@@ -97,7 +97,7 @@ namespace Markdown
             var result = parser.ParseLine(line);
 
             var headerTag = new Token(0, line.Length, new Headers());
-            var boldTag = new Token(1, 3, new Cursive());
+            var boldTag = new Token(1, 3, new CursiveRuleWithSingleUnderscores());
             var expected = new List<Token>() { headerTag, boldTag };
             result.Should().BeEquivalentTo(expected);
         }
@@ -115,7 +115,7 @@ namespace Markdown
             var parser = new TextParser(imgTag, new List<IParser>() { new ImageTagParser(imgTag) });
             var result = parser.ParseLine(text);
             var attributes = new List<TagAttribute>(){new TagAttribute(link, "src"), new TagAttribute(alt, "alt")};
-            var imageTag = new ImageTag() {HtmlTag = "img", MarkupTag = getMarkdowFromText.Match(text).Value, Attributes = attributes};
+            var imageTag = new ImageTag() {HtmlTag = "img", MarkdownTag = getMarkdowFromText.Match(text).Value, Attributes = attributes};
             var expected = new List<Token>(){new Token(leftBound, imageTag)};
 
             result.Should().BeEquivalentTo(expected);

@@ -17,8 +17,8 @@ namespace Markdown
         public DefaultHtmlConverter(IEnumerable<IMarkupRule> rules, IEnumerable<IParser> parsers)
         {
             CurrentMarkupRules = rules
-                .Where(e => e?.MarkupTag != null)
-                .OrderBy(e => e.MarkupTag.Length)
+                .Where(e => e?.MarkdownTag != null)
+                .OrderBy(e => e.MarkdownTag.Length)
                 .ToList();
             CurrentTagsParsers = parsers.ToList();
         }
@@ -112,7 +112,7 @@ namespace Markdown
             foreach (var subline in parsed)
             {
                 var htmlTag = subline.MarkupRule.HtmlTag;
-                var lenght = subline.MarkupRule.MarkupTag.Length;
+                var lenght = subline.MarkupRule.MarkdownTag.Length;
                 insertedTags.Add(
                     (subline.LeftBorderOfSubline, new FromMarkupTagToHtml(htmlTag, false, lenght, subline.MarkupRule)));
                 if (subline.MarkupRule.HaveClosingHtmlTag)

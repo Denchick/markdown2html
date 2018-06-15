@@ -19,7 +19,7 @@ namespace Markdown.TagsParsers
             var offset = 0;
             while (multilineText.Length != 0)
             {
-                var beginingTag = multilineText.IndexOf(rule.MarkupTag);
+                var beginingTag = multilineText.IndexOf(rule.MarkdownTag);
                 if (beginingTag == -1)
                     return result;
                 if (beginingTag != 0 && multilineText[beginingTag - 1] != '\n')
@@ -28,11 +28,11 @@ namespace Markdown.TagsParsers
                     offset += beginingTag;
                     continue;
                 }
-                var finishTag = multilineText.Substring(beginingTag + rule.MarkupTag.Length).IndexOf(rule.MarkupTag);
+                var finishTag = multilineText.Substring(beginingTag + rule.MarkdownTag.Length).IndexOf(rule.MarkdownTag);
                 if (finishTag == -1)
                     return result;
-                result.Add(new Token(beginingTag + offset, finishTag + offset + rule.MarkupTag.Length, rule));
-                multilineText = multilineText.Substring(finishTag + rule.MarkupTag.Length-1);
+                result.Add(new Token(beginingTag + offset, finishTag + offset + rule.MarkdownTag.Length, rule));
+                multilineText = multilineText.Substring(finishTag + rule.MarkdownTag.Length-1);
                 offset += finishTag;
             }
 

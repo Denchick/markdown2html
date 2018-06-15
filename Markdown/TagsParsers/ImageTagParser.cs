@@ -15,7 +15,7 @@ namespace Markdown.Parsers
         {
             CurrentMarkupRules = currentMarkupRules
                 .Where(e => !e.HaveClosingMarkupTag && e.HasAttribute)
-                .OrderByDescending(e => e.MarkupTag.Length)
+                .OrderByDescending(e => e.MarkdownTag.Length)
                 .ToList();
         }   
 
@@ -36,7 +36,7 @@ namespace Markdown.Parsers
                 var newTag = new ImageTag
                 {
                     Attributes = attributes,
-                    MarkupTag = tag.Groups[0].Value
+                    MarkdownTag = tag.Groups[0].Value
                 };
                 result.Add(new Token(i, newTag));
                 i += tag.Length;
@@ -56,8 +56,8 @@ namespace Markdown.Parsers
         {
 
             return CurrentMarkupRules
-                .Where(rule => i + rule.MarkupTag.Length <= line.Length)
-                .FirstOrDefault(rule => line.Substring(i, rule.MarkupTag.Length) == rule.MarkupTag);
+                .Where(rule => i + rule.MarkdownTag.Length <= line.Length)
+                .FirstOrDefault(rule => line.Substring(i, rule.MarkdownTag.Length) == rule.MarkdownTag);
         }
     }
 }

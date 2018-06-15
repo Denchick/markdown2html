@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Markdown.MarkupRules
 {
-    internal class Cursive : IMarkupRule
+    public abstract class Cursive
     {
-        public string MarkupTag { get; } = "_";
+        public string MarkdownTag => throw new NotImplementedException();
         public string HtmlTag { get; } = "em";
         public bool HaveClosingMarkupTag { get; } = true;
         public bool HaveClosingHtmlTag { get; } = true;
@@ -12,5 +13,15 @@ namespace Markdown.MarkupRules
         public bool UseForBlockText { get; set; } = false;
         public IEnumerable<TagAttribute> Attributes { get; }
         public string TextInsideTag { get; } = "";
+    }
+
+    public class CursiveRuleWithSingleUnderscores : Cursive, IMarkupRule
+    {
+        public new string MarkdownTag => "_";
+    }
+
+    public class CursiveRuleWithSingleAsterisks : Cursive, IMarkupRule
+    {
+        public new string MarkdownTag => "*";
     }
 }

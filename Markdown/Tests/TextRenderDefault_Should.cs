@@ -23,7 +23,7 @@ namespace Markdown
             var parsed = new List<Token>()
             {
                 new Token(leftBorderOfSubline, rightBorderOfSubline, 
-                    Utils.GetAllAvailableRules().First(e => e.MarkupTag == markupTag)),
+                    Utils.GetAllAvailableRules().First(e => e.MarkdownTag == markupTag)),
                 new Token(-1, line.Length, new Paragraph())
             };
             
@@ -36,7 +36,7 @@ namespace Markdown
         public void CorrectRendering_WhenFewTagsInLine()
         {
             var line = "_a_ __b__";
-            var cursiveTag = new Token(0, 2, new Cursive());
+            var cursiveTag = new Token(0, 2, new CursiveRuleWithSingleUnderscores());
             var boldTag = new Token(4, 7, new Bold());
             var paragraphTag = new Token(-1, line.Length, new Paragraph());
             var parsed = new List<Token>() { cursiveTag, boldTag, paragraphTag };
@@ -52,7 +52,7 @@ namespace Markdown
         {
             var line = "#_a_";
             var headerTag = new Token(0, line.Length, new Headers());
-            var boldTag = new Token(1, 3, new Cursive());
+            var boldTag = new Token(1, 3, new CursiveRuleWithSingleUnderscores());
             var parsed = new List<Token>() { headerTag, boldTag };
             
             var render = new DefaultHtmlConverter(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
@@ -68,7 +68,7 @@ namespace Markdown
             var render = new DefaultHtmlConverter(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var parsed = new List<Token>()
             {
-                new Token(0, 4, Utils.GetAllAvailableRules().First(e => e.MarkupTag == "#"))
+                new Token(0, 4, Utils.GetAllAvailableRules().First(e => e.MarkdownTag == "#"))
             };
             
             var actual = render.RenderLine(line, parsed);
@@ -161,6 +161,7 @@ namespace Markdown
             result.Should().BeEquivalentTo(expected);
         }
 
+        
         [TestCase("> kek \r\n>kek\r\n>kek")]
         public void CorrectConvertMultilineQuotation(string quotation)
         {
@@ -179,6 +180,14 @@ namespace Markdown
         {
             var converter = new DefaultHtmlConverter(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var result = converter.ConvertToFormat(quotation);
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [TestCase("> *Header in quote* ", "<blockquote><p> <em>Header in quote</em> </p></blockquote>\r\n")]
+        public void ConvertTextWithNesting(string text, string expected)
+        {
+            var converter = new DefaultHtmlConverter(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
+            var result = converter.ConvertToFormat(text);
             result.Should().BeEquivalentTo(expected);
         }
     }

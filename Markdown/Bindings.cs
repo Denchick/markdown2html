@@ -13,7 +13,8 @@ public class Bindings : NinjectModule
         Bind<ILanguageConverter>().To<DefaultHtmlConverter>();
         Bind<IMarkupRule>().To<Bold>();
         Bind<IMarkupRule>().To<InlineCode>();
-        Bind<IMarkupRule>().To<Cursive>();
+        Bind<IMarkupRule>().To<CursiveRuleWithSingleAsterisks>();
+        Bind<IMarkupRule>().To<CursiveRuleWithSingleUnderscores>();
         Bind<IMarkupRule>().To<Header6>();
         Bind<IMarkupRule>().To<Header6>();
         Bind<IMarkupRule>().To<Header5>();
@@ -31,7 +32,7 @@ public class Bindings : NinjectModule
         Bind<IMarkupRule>().To<MultilineCode>();
         Bind<IMarkupRule>().To<Quotation>();
 
-        Bind<IParser, IInLineParser>().To<PairedMarkupTagParser>();
+        Bind<IParser, IInLineParser>().To<EmphasisTagParser>();
         Bind<IParser, IInLineParser>().To<ParagraphTagsParser>();
         Bind<IParser, IInLineParser>().To<SingleMarkupTagsParser>();
         Bind<IParser, IInLineParser>().To<ImageTagParser>();

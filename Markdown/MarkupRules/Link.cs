@@ -8,7 +8,7 @@ namespace Markdown.MarkupRules
 {
     internal class Link : IMarkupRule
     {
-        public string MarkupTag { get; set; } = "[";
+        public string MarkdownTag { get; set; } = "[";
         public string HtmlTag { get; set; } = "a";
         public bool HaveClosingMarkupTag { get; } = false;
         public bool HaveClosingHtmlTag { get; } = true;

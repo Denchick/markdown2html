@@ -8,7 +8,7 @@ namespace Markdown.MarkupRules
 {
     internal class Quotation : IMarkupRule
     {
-        public string MarkupTag { get; } = ">";
+        public string MarkdownTag { get; } = ">";
         public string HtmlTag { get; } = "blockquote";
         public bool HaveClosingMarkupTag { get; } = false;
         public bool HaveClosingHtmlTag { get; } = true;

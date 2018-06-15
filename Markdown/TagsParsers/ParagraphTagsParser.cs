@@ -13,7 +13,7 @@ namespace Markdown.TagsParsers
         {
             CurrentMarkupRules = currentMarkupRules
                 .Where(e => !e.HaveClosingMarkupTag && !(e is Paragraph) && !e.UseForBlockText)
-                .OrderByDescending(e => e.MarkupTag.Length)
+                .OrderByDescending(e => e.MarkdownTag.Length)
                 .ToList();
         }
 
@@ -21,7 +21,7 @@ namespace Markdown.TagsParsers
         {
             var result = new List<Token>();
 
-            if (CurrentMarkupRules.Any(e => line.StartsWith(e.MarkupTag))) return result;
+            if (CurrentMarkupRules.Any(e => line.StartsWith(e.MarkdownTag))) return result;
             var endTag = line.Length;
             var startTag = -1;
             if (line.EndsWith("</blockquote>"))

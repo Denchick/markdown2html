@@ -32,7 +32,7 @@ namespace Markdown.TagsParsers
                 var linkAttribute = new TagAttribute($"\"{markdownTag.Groups[3].Value}\"", "href"); ;
                 var titleAttribute = new TagAttribute(markdownTag.Groups[4].Value, "title");
                 var attributes = new List<TagAttribute> {linkAttribute, titleAttribute};
-                var linkTag = new Link(){MarkupTag = markdownTag.Groups[1].Value, Attributes = attributes, TextInsideTag = text};
+                var linkTag = new Link(){MarkdownTag = markdownTag.Groups[1].Value, Attributes = attributes, TextInsideTag = text};
                 result.Add(new Token(i, i + markdownTag.Groups[1].Value.Length, linkTag));
                 i += markdownTag.Groups[1].Length;
             }
@@ -51,8 +51,8 @@ namespace Markdown.TagsParsers
         {
 
             return CurrentMarkupRules
-                .Where(rule => i + rule.MarkupTag.Length <= line.Length)
-                .FirstOrDefault(rule => line.Substring(i, rule.MarkupTag.Length) == rule.MarkupTag);
+                .Where(rule => i + rule.MarkdownTag.Length <= line.Length)
+                .FirstOrDefault(rule => line.Substring(i, rule.MarkdownTag.Length) == rule.MarkdownTag);
         }
     }
 }

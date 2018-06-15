@@ -4,15 +4,15 @@ using Markdown.MarkupRules;
 
 namespace Markdown.TagsParsers
 {
-    public class PairedMarkupTagParser : IInLineParser
+    public class EmphasisTagParser : IInLineParser
     {
         private List<IMarkupRule> CurrentMarkupRules { get; }
 
-        public PairedMarkupTagParser(List<IMarkupRule> currentMarkupRules)
+        public EmphasisTagParser(List<IMarkupRule> currentMarkupRules)
         {
             CurrentMarkupRules = currentMarkupRules
                 .Where(e => e.HaveClosingMarkupTag && !e.UseForBlockText)
-                .OrderByDescending(e => e.MarkupTag.Length)
+                .OrderByDescending(e => e.MarkdownTag.Length)
                 .ToList();
         }
 
@@ -27,14 +27,14 @@ namespace Markdown.TagsParsers
 
                 if (Utils.CanBeOpenningTag(line, index))
                     stackOfOpenedTags.Push(new Token(index, rule));
-                else if (Utils.CanBeClosingTag(line, index, rule.MarkupTag.Length))
+                else if (Utils.CanBeClosingTag(line, index, rule.MarkdownTag.Length))
                 {
                     var element = GetClosingElement(stackOfOpenedTags, rule);
                     if (element == null) continue;
                     element.RightBorderOfSubline = index;
                     result.Add(element);
                 }
-                index += rule.MarkupTag.Length - 1;
+                index += rule.MarkdownTag.Length - 1;
             }
             return result;
         }
@@ -61,8 +61,8 @@ namespace Markdown.TagsParsers
         {
 
             return CurrentMarkupRules
-                .Where(rule => i + rule.MarkupTag.Length <= line.Length)
-                .FirstOrDefault(rule => line.Substring(i, rule.MarkupTag.Length) == rule.MarkupTag);
+                .Where(rule => i + rule.MarkdownTag.Length <= line.Length)
+                .FirstOrDefault(rule => line.Substring(i, rule.MarkdownTag.Length) == rule.MarkdownTag);
         }
     }
 }

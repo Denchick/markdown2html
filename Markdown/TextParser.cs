@@ -17,7 +17,7 @@ namespace Markdown
         public TextParser(IEnumerable<IMarkupRule> rules, IEnumerable<IParser> parsers)
         {
             CurrentMarkupRules = rules
-                .OrderByDescending(e => e.MarkupTag.Length)
+                .OrderByDescending(e => e.MarkdownTag.Length)
                 .ToList();
 
             InLineParsers = parsers.Select(e => e as IInLineParser).Where(e => e != null).ToList();

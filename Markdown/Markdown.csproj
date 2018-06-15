@@ -82,7 +82,7 @@
     <Compile Include="TagsParsers\IMultiLineParser.cs" />
     <Compile Include="TagsParsers\LinkTagsParser.cs" />
     <Compile Include="TagsParsers\MultilineCodeTagsParser.cs" />
-    <Compile Include="TagsParsers\PairedMarkupTagParser.cs" />
+    <Compile Include="TagsParsers\EmphasisTagParser.cs" />
     <Compile Include="TagsParsers\ParagraphTagsParser.cs" />
     <Compile Include="TagsParsers\QuotationParser.cs" />
     <Compile Include="TagsParsers\SingleMarkupTagsParser.cs" />

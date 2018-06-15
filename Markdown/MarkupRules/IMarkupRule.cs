@@ -6,7 +6,7 @@ namespace Markdown
 {
     public interface IMarkupRule
     {
-        string MarkupTag { get; }
+        string MarkdownTag { get; }
         string HtmlTag { get; }
         bool HaveClosingMarkupTag { get; }
         bool HaveClosingHtmlTag { get; }
