@@ -37,7 +37,7 @@ namespace Markdown
         {
             var line = "_a_ __b__";
             var cursiveTag = new Token(0, 2, new CursiveRuleWithSingleUnderscores());
-            var boldTag = new Token(4, 7, new Bold());
+            var boldTag = new Token(4, 7, new BoldRuleWithDoubleUnderscores());
             var paragraphTag = new Token(-1, line.Length, new Paragraph());
             var parsed = new List<Token>() { cursiveTag, boldTag, paragraphTag };
             
@@ -190,6 +190,7 @@ namespace Markdown
             var result = converter.ConvertToFormat(text);
             result.Should().BeEquivalentTo(expected);
         }
+        
     }
     
 }

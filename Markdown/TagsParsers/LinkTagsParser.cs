@@ -9,7 +9,7 @@ namespace Markdown.TagsParsers
     internal class LinkTagsParser : IInLineParser
     {
         private IEnumerable<IMarkupRule> CurrentMarkupRules;
-        private Regex getMarkdownTag = new Regex("[^!](\\[(.*?)\\]\\(([\\S]*)(.*?)\\))");
+        private Regex getMarkdownTag = new Regex("[^!]*(\\[(.*?)\\]\\(([\\S]*)(.*?)\\))");
 
         public LinkTagsParser(IEnumerable<IMarkupRule> rules)
         {
@@ -29,7 +29,7 @@ namespace Markdown.TagsParsers
                 if (markdownTag.Length == 0 || !subLine.StartsWith(markdownTag.Value))
                     continue;
                 var text = markdownTag.Groups[2].Value;
-                var linkAttribute = new TagAttribute($"\"{markdownTag.Groups[3].Value}\"", "href"); ;
+                var linkAttribute = new TagAttribute($"{markdownTag.Groups[3].Value}", "href"); ;
                 var titleAttribute = new TagAttribute(markdownTag.Groups[4].Value, "title");
                 var attributes = new List<TagAttribute> {linkAttribute, titleAttribute};
                 var linkTag = new Link(){MarkdownTag = markdownTag.Groups[1].Value, Attributes = attributes, TextInsideTag = text};

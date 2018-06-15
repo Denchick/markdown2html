@@ -11,7 +11,8 @@ public class Bindings : NinjectModule
     public override void Load()
     {
         Bind<ILanguageConverter>().To<DefaultHtmlConverter>();
-        Bind<IMarkupRule>().To<Bold>();
+        Bind<IMarkupRule>().To<BoldRuleWithDoubleAsterisks>();
+        Bind<IMarkupRule>().To<BoldRuleWithDoubleUnderscores>();
         Bind<IMarkupRule>().To<InlineCode>();
         Bind<IMarkupRule>().To<CursiveRuleWithSingleAsterisks>();
         Bind<IMarkupRule>().To<CursiveRuleWithSingleUnderscores>();
