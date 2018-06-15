@@ -195,15 +195,29 @@ namespace Markdown
         }
 
         [TestCase(">kek\r\n>>kek\r\n>kek", 7, 11)]
-        public void CorrectParseNestingQuotation(string text, int leftBordNestingQuotation, int rightBordNestingQuotation)
+        public void CorrectParseNestingQuotation(string text, int leftBorderNestingQuotation, int rightBorderNestingQuotation)
         {
             var expected = new List<Token>()
             {
-                new Token(leftBordNestingQuotation, rightBordNestingQuotation, new Quotation()),
+                new Token(leftBorderNestingQuotation, rightBorderNestingQuotation, new Quotation()),
                 new Token(0, text.Length, new Quotation())
             };
             var parser = new TextParser(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var result = parser.ParseMultilineText(text);
+            result.Should().BeEquivalentTo(expected);
+        }
+
+        [TestCase("> *Header in quote* ", 2, 18)]
+        public void CorrectParseOtherTagsInside(string text, int leftBorderInsideRule, int rightBorderInsideRule)
+        {
+            var expected = new List<Token>()
+            {
+                new Token(0, text.Length, new Quotation()),
+                new Token(leftBorderInsideRule, rightBorderInsideRule, new CursiveRuleWithSingleAsterisks()),
+                new Token(-1, text.Length, new Paragraph())
+            };
+            var parser = new TextParser(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
+            var result = parser.ParseMultilineText(text).Union(parser.ParseLine(text)).ToList();
             result.Should().BeEquivalentTo(expected);
         }
     };
