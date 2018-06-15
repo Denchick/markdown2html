@@ -34,7 +34,7 @@ namespace Markdown
                 new Paragraph(), new InlineCode(), 
                 new HorizontalRuleWith3Hyphens(), new HorizontalRuleWith3HyphensSeparatedBySpaces(),
                 new HorizontalRuleWith3Stars(), new HorizontalRuleWith3StarsSeparatedBySpaces(),
-                new ImageTag(), new Link(), new Quotation(),
+                new ImageTag(), new Link(), new Quotation(), new MultilineCode()
             };
         }
 
@@ -49,7 +49,8 @@ namespace Markdown
                 new SingleMarkupTagsParser(rules),
                 new ImageTagParser(rules),
                 new LinkTagsParser(rules),
-                new QuotationParser()
+                new QuotationParser(),
+                new MultilineCodeTagsParser(),
             };
         }
 

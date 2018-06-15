@@ -17,17 +17,25 @@ namespace Markdown.TagsParsers
                 .ToList();
         }
 
+        private bool inMultiCode = false;
         public IEnumerable<Token> ParseLine(string line)
         {
             var result = new List<Token>();
-
-            if (CurrentMarkupRules.Any(e => line.StartsWith(e.MarkdownTag))) return result;
+            if (CurrentMarkupRules.Any(e => line.StartsWith(e.MarkdownTag)) || inMultiCode) return result;
             var endTag = line.Length;
             var startTag = -1;
             if (line.EndsWith("</blockquote>"))
                 endTag = endTag - "</blockquote>".Length;
+            if (line.EndsWith("</pre>") || line.StartsWith("<pre>"))
+            {
+                inMultiCode = !inMultiCode;
+                return result;
+            }
+                
             if (line.StartsWith("<blockquote>"))
                 startTag = "<blockquote>".Length;
+            
+
             result.Add(new Token(startTag, endTag, new Paragraph()));
 
             return result;            

@@ -51,13 +51,27 @@ namespace Markdown
         private string ReplaceAngleBrackets(string text, IEnumerable<Token> parsed)
         {
             var result = new StringBuilder(text);
+            var leftAngleBracket = "&lt;";
+            var rightAngleBracket = "&gt;";
+            var offset = 0;
             foreach (var token in parsed)
             {
                 if (!(token.MarkupRule is MultilineCode)) continue;
-                result.Replace("<", "&lt;", token.LeftBorderOfSubline + token.MarkupRule.HtmlTag.Length + 2,
-                    token.RightBorderOfSubline - (token.LeftBorderOfSubline + token.MarkupRule.HtmlTag.Length + 2));
-                result.Replace(">", "&gt;", token.LeftBorderOfSubline + token.MarkupRule.HtmlTag.Length + 2,
-                    token.RightBorderOfSubline - (token.LeftBorderOfSubline + token.MarkupRule.HtmlTag.Length + 2));
+                for (int i = token.LeftBorderOfSubline + +token.MarkupRule.HtmlTag.Length + 2; i <= token.RightBorderOfSubline + offset ; i++)
+                {
+                    if (result[i] == '<')
+                    {
+                        result.Remove(i, 1);
+                        result.Insert(i, leftAngleBracket);
+                        offset += leftAngleBracket.Length - 1;
+                    }
+                    else if (result[i] == '>')
+                    {
+                        result.Remove(i, 1);
+                        result.Insert(i, rightAngleBracket);
+                        offset += rightAngleBracket.Length - 1;
+                    }
+                }
             }
             return result.ToString();
         }

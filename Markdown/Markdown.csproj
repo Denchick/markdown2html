@@ -89,7 +89,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\TextParser_Should.cs" />
-    <Compile Include="Tests\TextRenderDefault_Should.cs" />
+    <Compile Include="Tests\TextConverterDefault_Should.cs" />
     <Compile Include="TextParser.cs" />
     <Compile Include="Utils\FromMarkupTagToHtml.cs" />
     <Compile Include="Utils\Token.cs" />

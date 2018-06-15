@@ -227,6 +227,19 @@ namespace Markdown
             result.Should().BeEquivalentTo(expected);
         }
         #endregion
+
+        [TestCase("``` some code \r\n var a = 2; \r\n return kek\r\n```")]
+        public void CorrectParseCodeTag(string text)
+        {
+            var expected = new List<Token>()
+            {
+                new Token(0, text.Length - 3, new MultilineCode())
+            };
+
+            var parser = new TextParser(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
+            var result = parser.ParseMultilineText(text);
+            result.Should().BeEquivalentTo(expected);
+        }
     };
 
 
