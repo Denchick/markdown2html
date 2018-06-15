@@ -13,7 +13,6 @@ namespace Markdown
         private List<IMarkupRule> CurrentMarkupRules { get; }
         private List<IParser> CurrentTagsParsers { get; }
 
-
         public DefaultHtmlConverter(IEnumerable<IMarkupRule> rules, IEnumerable<IParser> parsers)
         {
             CurrentMarkupRules = rules
@@ -24,6 +23,23 @@ namespace Markdown
         }
 
         public string ConvertToFormat(string markdown)
+        {
+            var result = new List<string>()
+            {
+                "<!doctype html>",
+                "<html>",
+                "<head>",
+                "<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>",
+                "</head>",
+                "<body>",
+                GetTextInHtml(markdown),
+                "</body>",
+                "</html>",
+            };
+            return string.Join("\r\n", result);
+        }
+
+        public string GetTextInHtml(string markdown)
         {
             var parser = new TextParser(CurrentMarkupRules, CurrentTagsParsers);
             var multilineParsed = ConvertByMultilinesParsers(markdown, parser).ToString();
