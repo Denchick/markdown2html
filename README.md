@@ -33,7 +33,7 @@
 ```c#
 interface IMarkupRule
 {
-    string MarkupTag { get; }
+    string MarkdownTag { get; }
     string HtmlTag { get; }
     bool HaveClosingMarkupTag { get; }
     bool HaveClosingHtmlTag { get; }
@@ -49,7 +49,7 @@ interface IMarkupRule
 ```c#
 class Bold : IMarkupRule
 {
-	public string MarkupTag { get; } = "__";
+	public string MarkdownTag { get; } = "__";
 	public string HtmlTag { get; } = "strong";
 	public bool HaveClosingMarkupTag { get; } = true;
 	public bool HaveClosingHtmlTag { get; } = true;
@@ -117,6 +117,8 @@ interface ILanguageConverter
 
 У Дениса была хреновая архитектура, но Артур пришел и прокачал ее. А еще он жмет двацатку на турничках.
 
+А на самом деле, вклад в проект был поровну и большую часть времени мы делали проект вместе. Иногда на 2-х компьютерах, иногда на одном. 
+
 ## Точки расширения
 
 1. Из уже написанных парсеров, а их около 10, можно выбрать тот, который вам подходит и просто  написать свое правило(`IMarkupRule`), указать его в `Bindings.cs`. Например, я потратил 5 минут, чтобы добавить поддержку зачеркнутого текста.
@@ -134,6 +136,3 @@ interface ILanguageConverter
 Да, наша архитектура не идеальна, но зато мы знаем теперь, как нужно было делать.
 
 ![](images/field.png)
-
-
-
