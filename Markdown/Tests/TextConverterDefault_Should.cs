@@ -150,6 +150,8 @@ namespace Markdown
             var result = render.ConvertToFormat(text);
             result.Should().BeEquivalentTo(html);
         }
+
+        #region Quotation
         
         [TestCase("> kek kek kek")]
         public void CorrectConvertInlineQuotation(string quotation)
@@ -190,7 +192,19 @@ namespace Markdown
             var result = converter.ConvertToFormat(text);
             result.Should().BeEquivalentTo(expected);
         }
-        
+        #endregion
+
+        [TestCase("[kek_inside_text](kek)", "kek", "kek_inside_text")]
+        [TestCase("[kek_inside_text](kek title)", "kek", "kek_inside_text", " title")]
+        public void CorrectConvertLink(string text, string expectedLink, string expectedTextInsideLink,
+            string expectedTitle="")
+        {
+            var expectedTag = $"<a href=\"{expectedLink}\" title=\"{expectedTitle}\">{expectedTextInsideLink}</a>\r\n";
+            var converter = new DefaultHtmlConverter(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
+            var result = converter.ConvertToFormat(text);
+
+            result.Should().BeEquivalentTo(expectedTag);
+        }
     }
-    
+
 }
