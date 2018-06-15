@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Markdown.MarkupRules
 {
-    internal class Bold : IMarkupRule
+    public  abstract class Bold
     {
-        public string MarkdownTag { get; } = "__";
+        public string MarkdownTag => throw new NotImplementedException();
         public string HtmlTag { get; } = "strong";
         public bool HaveClosingMarkupTag { get; } = true;
         public bool HaveClosingHtmlTag { get; } = true;
@@ -12,5 +13,15 @@ namespace Markdown.MarkupRules
         public bool UseForBlockText { get; set; } = false;
         public IEnumerable<TagAttribute> Attributes { get; }
         public string TextInsideTag { get; } = "";
+    }
+
+    public class BoldRuleWithDoubleAsterisks : Bold, IMarkupRule
+    {
+        public new string MarkdownTag => "**";
+    }
+
+    public class BoldRuleWithDoubleUnderscores : Bold, IMarkupRule
+    {
+        public new string MarkdownTag => "__";
     }
 }
