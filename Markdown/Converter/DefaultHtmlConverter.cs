@@ -90,7 +90,7 @@ namespace Markdown
                 .FirstOrDefault(e => e.HtmlTag == obj.TagName);
             var attributes = "";
             if(obj.Rule.HasAttribute && !obj.IsClosingHtmlTag)
-                attributes = string.Join(" ", obj.Rule.Attributes.Select(atr => $" {atr.Name}={atr.Value}").ToArray());
+                attributes = string.Join("", obj.Rule.Attributes.Select(atr => $" {atr.Name}=\"{atr.Value}\"").ToArray());
             return obj.IsClosingHtmlTag ? $@"</{obj.TagName}>" : $"<{obj.TagName}{attributes}>{obj.Rule.TextInsideTag}";
         }
 

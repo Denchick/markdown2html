@@ -114,8 +114,8 @@ namespace Markdown
         {
             var parser = new TextParser(imgTag, new List<IParser>() { new ImageTagParser(imgTag) });
             var result = parser.ParseLine(text);
-            var html = $"img src=\"{link}\" alt=\"{alt}\"";
-            var imageTag = new ImageTag() {HtmlTag = html, MarkupTag = getMarkdowFromText.Match(text).Value};
+            var attributes = new List<TagAttribute>(){new TagAttribute(link, "src"), new TagAttribute(alt, "alt")};
+            var imageTag = new ImageTag() {HtmlTag = "img", MarkupTag = getMarkdowFromText.Match(text).Value, Attributes = attributes};
             var expected = new List<Token>(){new Token(leftBound, imageTag)};
 
             result.Should().BeEquivalentTo(expected);
