@@ -25,25 +25,34 @@ namespace Markdown
 
         public string ConvertToFormat(string markdown)
         {
-            var result = new StringBuilder();
-
             var parser = new TextParser(CurrentMarkupRules, CurrentTagsParsers);
-            foreach (var line in markdown.Split(new string[] { "\r\n\r\n" }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                var parsed = parser.ParseMultilineText(line);
-                var rendered = RenderLine(line, parsed);
-                result.Append($"{rendered}\r\n\r\n");
-            }
+            var multilineParsed = ConvertByMultilinesParsers(markdown, parser).ToString();
+            var inlineParsed = ConvertByInlinesParsers(multilineParsed, parser).ToString();
+            return inlineParsed;
+        }
 
-            var neLline = result.ToString();
-            result.Clear();
-            foreach (var line in neLline.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries))
+        private StringBuilder ConvertByInlinesParsers(string markdownText, TextParser parser)
+        {
+            var result = new StringBuilder();
+            foreach (var line in markdownText.Split(new string[] {"\r\n"}, StringSplitOptions.RemoveEmptyEntries))
             {
                 var parsed = parser.ParseLine(line);
                 var rendered = RenderLine(line, parsed);
                 result.Append($"{rendered}\r\n");
             }
-            return result.ToString();
+            return result;
+        }
+
+        private StringBuilder ConvertByMultilinesParsers(string markdownText, TextParser parser)
+        {
+            var result = new StringBuilder();
+            foreach (var line in markdownText.Split(new string[] {"\r\n\r\n"}, StringSplitOptions.RemoveEmptyEntries))
+            {
+                var parsed = parser.ParseMultilineText(line);
+                var rendered = RenderLine(line, parsed);
+                result.Append($"{rendered}\r\n\r\n");
+            }
+            return result;
         }
 
         public string RenderLine(string line, IEnumerable<Token> parsed)
