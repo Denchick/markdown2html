@@ -54,7 +54,7 @@ namespace Markdown
             var expected = new List<Token>()
             {
                 new Token(-1, line.Length, Utils.GetAllAvailableRules()
-                    .First(e => e.HtmlTag == "p")),
+                    .First(e => e.Tag == "p")),
                 new Token(leftParsedIndex, rightParsedIndex, Utils.GetAllAvailableRules()
                     .First(e => e.MarkdownTag == markupTag))
             };
@@ -130,7 +130,7 @@ namespace Markdown
             var attributes = new List<TagAttribute>() {new TagAttribute(link, "src"), new TagAttribute(alt, "alt")};
             var imageTag = new ImageTag()
             {
-                HtmlTag = "img",
+                Tag = "img",
                 MarkdownTag = getMarkdowFromText.Match(text).Value,
                 Attributes = attributes
             };
@@ -162,7 +162,7 @@ namespace Markdown
 
             var linkTag = new Link()
             {
-                HtmlTag = "a",
+                Tag = "a",
                 Attributes = attribute,
                 TextInsideTag = textInsideTag,
                 MarkdownTag = markdownTag
@@ -219,8 +219,9 @@ namespace Markdown
             var expected = new List<Token>()
             {
                 new Token(0, text.Length, new Quotation()),
+
+                new Token(-1, text.Length, new Paragraph()),
                 new Token(leftBorderInsideRule, rightBorderInsideRule, new CursiveRuleWithSingleAsterisks()),
-                new Token(-1, text.Length, new Paragraph())
             };
             var parser = new TextParser(Utils.GetAllAvailableRules(), Utils.GetAllAvailableParsers());
             var result = parser.ParseMultilineText(text).Union(parser.ParseLine(text)).ToList();

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Markdown.MarkupRules;
-using NUnit.Framework.Internal;
 
 namespace Markdown.TagsParsers
 {
@@ -12,7 +11,7 @@ namespace Markdown.TagsParsers
         public ParagraphTagsParser(IEnumerable<IMarkupRule> currentMarkupRules)
         {
             CurrentMarkupRules = currentMarkupRules
-                .Where(e => !e.HaveClosingMarkupTag && !(e is Paragraph) && !e.UseForBlockText)
+                .Where(e => !e.HaveClosingMarkupTag && !(e is Paragraph) && !e.UseForMultiline)
                 .OrderByDescending(e => e.MarkdownTag.Length)
                 .ToList();
         }

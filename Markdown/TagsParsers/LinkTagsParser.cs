@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Markdown.MarkupRules;
@@ -8,12 +7,12 @@ namespace Markdown.TagsParsers
 {
     internal class LinkTagsParser : IInLineParser
     {
-        private IEnumerable<IMarkupRule> CurrentMarkupRules;
-        private Regex getMarkdownTag = new Regex("[^!]*(\\[(.*?)\\]\\(([\\S]*)(.*?)\\))");
+        private readonly IEnumerable<IMarkupRule> CurrentMarkupRules;
+        private readonly Regex getMarkdownTag = new Regex("[^!]*(\\[(.*?)\\]\\(([\\S]*)(.*?)\\))");
 
         public LinkTagsParser(IEnumerable<IMarkupRule> rules)
         {
-            CurrentMarkupRules = rules.Where(r => r.HasAttribute && r.HaveClosingHtmlTag);
+            CurrentMarkupRules = rules.Where(r => r.HasAttribute && r.HaveClosingTag);
         }
 
         public IEnumerable<Token> ParseLine(string line)

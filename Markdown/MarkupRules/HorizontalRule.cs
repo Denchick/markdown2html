@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Markdown.MarkupRules
 {
     abstract class HorizontalRule
     {
         public string MarkdownTag => throw new NotImplementedException();
-        public string HtmlTag { get; } = "hr";
+        public string Tag { get; } = "hr";
         public bool HaveClosingMarkupTag { get; } = false;
-        public bool HaveClosingHtmlTag { get; } = false;
+        public bool HaveClosingTag { get; } = false;
         public bool HasAttribute { get; } = false;
-        public bool UseForBlockText { get; set; } = false;
         public IEnumerable<TagAttribute> Attributes { get; }
         public string TextInsideTag { get; } = "";
-        
+        public bool UseForMultiline { get; } = false;
+
     }
 
     internal class HorizontalRuleWith3Stars : HorizontalRule, IMarkupRule

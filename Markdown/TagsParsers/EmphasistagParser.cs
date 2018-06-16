@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Markdown.MarkupRules;
 
 namespace Markdown.TagsParsers
 {
@@ -11,7 +10,7 @@ namespace Markdown.TagsParsers
         public EmphasisTagParser(List<IMarkupRule> currentMarkupRules)
         {
             CurrentMarkupRules = currentMarkupRules
-                .Where(e => e.HaveClosingMarkupTag && !e.UseForBlockText)
+                .Where(e => e.HaveClosingMarkupTag)
                 .OrderByDescending(e => e.MarkdownTag.Length)
                 .ToList();
         }

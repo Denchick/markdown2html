@@ -5,7 +5,6 @@ using System.Text;
 using Markdown.MarkupRules;
 using Markdown.Renders;
 using Markdown.TagsParsers;
-using static System.ValueTuple;
 
 namespace Markdown
 {
@@ -57,7 +56,7 @@ namespace Markdown
             foreach (var token in parsed)
             {
                 if (!(token.MarkupRule is MultilineCode)) continue;
-                for (int i = token.LeftBorderOfSubline + +token.MarkupRule.HtmlTag.Length + 2; i <= token.RightBorderOfSubline + offset ; i++)
+                for (int i = token.LeftBorderOfSubline + +token.MarkupRule.Tag.Length + 2; i <= token.RightBorderOfSubline + offset ; i++)
                 {
                     if (result[i] == '<')
                     {
@@ -143,7 +142,7 @@ namespace Markdown
         private string GetHtmlTagFromMarkup(FromMarkupTagToHtml obj)
         {
             var markupRule = CurrentMarkupRules
-                .FirstOrDefault(e => e.HtmlTag == obj.TagName);
+                .FirstOrDefault(e => e.Tag == obj.TagName);
             var attributes = "";
             if(obj.Rule.HasAttribute && !obj.IsClosingHtmlTag)
                 attributes = string.Join("", obj.Rule.Attributes.Select(atr => $" {atr.Name}=\"{atr.Value}\"").ToArray());
@@ -156,11 +155,11 @@ namespace Markdown
             
             foreach (var subline in parsed)
             {
-                var htmlTag = subline.MarkupRule.HtmlTag;
+                var htmlTag = subline.MarkupRule.Tag;
                 var lenght = subline.MarkupRule.MarkdownTag.Length;
                 insertedTags.Add(
                     (subline.LeftBorderOfSubline, new FromMarkupTagToHtml(htmlTag, false, lenght, subline.MarkupRule)));
-                if (subline.MarkupRule.HaveClosingHtmlTag)
+                if (subline.MarkupRule.HaveClosingTag)
                 {
                     if (!subline.MarkupRule.HaveClosingMarkupTag)
                         lenght = 0;

@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Markdown.MarkupRules
 {
     internal class Link : IMarkupRule
     {
         public string MarkdownTag { get; set; } = "[";
-        public string HtmlTag { get; set; } = "a";
+        public string Tag { get; set; } = "a";
         public bool HaveClosingMarkupTag { get; } = false;
-        public bool HaveClosingHtmlTag { get; } = true;
+        public bool HaveClosingTag { get; } = true;
         public bool HasAttribute { get; } = true;
-        public bool UseForBlockText { get; set; } = false;
         public IEnumerable<TagAttribute> Attributes { get; set; }
         public string TextInsideTag { get; set; }
+        public bool UseForMultiline { get; } = false;
     }
 }
