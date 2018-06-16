@@ -16,6 +16,7 @@ public class Bindings : NinjectModule
         Bind<IMarkupRule>().To<InlineCode>().InSingletonScope();
         Bind<IMarkupRule>().To<CursiveRuleWithSingleAsterisks>().InSingletonScope();
         Bind<IMarkupRule>().To<CursiveRuleWithSingleUnderscores>().InSingletonScope();
+        Bind<IMarkupRule>().To<Strike>().InSingletonScope();
         Bind<IMarkupRule>().To<Header6>().InSingletonScope();
         Bind<IMarkupRule>().To<Header6>().InSingletonScope();
         Bind<IMarkupRule>().To<Header5>().InSingletonScope();
